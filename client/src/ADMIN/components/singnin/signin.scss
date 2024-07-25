@@ -1,0 +1,25 @@
+.signin {
+  position: fixed;
+  width: 500px;
+  height: 400px;
+  z-index: 112;
+  top: 30px;
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #18191a;
+
+  button {
+    height: 50px;
+  }
+}
+.overlay-signin {
+  z-index: 111;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

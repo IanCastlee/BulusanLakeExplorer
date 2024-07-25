@@ -1,0 +1,16 @@
+.dashboard {
+  display: flex;
+  height: calc(100vh - 70px);
+  width: 100%;
+  background-color: #18191a;
+  overflow-y: auto;
+
+  .dash-content {
+    width: 85%;
+    height: 100%;
+
+    h1 {
+      font-size: 60px;
+    }
+  }
+}

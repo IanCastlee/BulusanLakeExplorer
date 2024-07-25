@@ -1,0 +1,161 @@
+@import url("../../pages/SCSS/main.scss");
+
+.notif {
+  background-color: var(--rightbgc);
+  height: calc(100vh - 70px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrappern {
+  background-color: var(--background-soft);
+
+  display: flex;
+  max-width: fit-content;
+  height: 100%;
+  padding: 20px 15px 3px 15px;
+  background-color: var();
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+
+  .titlen {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    h6 {
+      color: var(--secondary-text-color);
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  .card {
+    display: flex;
+    gap: 5px;
+    background-color: var(--button-color);
+    padding: 10px;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: start;
+    color: var(--secondary-text-color);
+
+    &.clicked {
+      background-color: var(--rightbgc);
+      color: var(--primary-text-color);
+    }
+
+    span {
+      color: var(--secondary-text-color);
+      font-size: 10px;
+    }
+
+    .rightn {
+      width: 100%;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 5px;
+      i {
+        font-size: 25px;
+        color: green;
+      }
+
+      .msg {
+        font-size: 14px;
+      }
+    }
+
+    .bot {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      a {
+        font-size: 10px;
+        font-weight: 500;
+        color: blue;
+        cursor: pointer;
+      }
+    }
+  }
+  .show-more-btn {
+    background-color: transparent;
+    color: var(--secondary-text-color);
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+  }
+}
+@media (max-width: 789px) {
+  .notif {
+    height: calc(100vh - 65px);
+    width: 100%;
+
+    .wrappern {
+      width: 100%;
+      display: flex;
+      max-width: 100%;
+      height: 100%;
+      padding: 20px 3px 3px 3px;
+      background-color: var(--background-color);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow-y: auto;
+
+      .titlen {
+        h6 {
+          font-size: 18px;
+        }
+      }
+
+      .card {
+        width: 100%;
+        border-radius: 0;
+        .rightn {
+          width: 100%;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 5px;
+          i {
+            font-size: 25px;
+            color: green;
+          }
+
+          .msg {
+            font-size: 14px;
+            font-weight: 300;
+          }
+        }
+
+        .bot {
+          width: 100%;
+          display: flex;
+          justify-content: end;
+          align-items: center;
+          a {
+            font-size: 10px;
+            font-weight: 500;
+            color: blue;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .show-more-btn {
+        background-color: transparent;
+        color: var(--secondary-text-color);
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+      }
+    }
+  }
+}

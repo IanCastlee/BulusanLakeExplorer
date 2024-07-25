@@ -1,0 +1,153 @@
+import "./biodiversity.scss";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Addactivity from "../components/addact/Addactivity";
+import Sideba from "../components/sidebar/Sideba";
+import config from "../../BaseURL";
+import Addbiodiversity from "./Addbiodiversity";
+
+const Biodiversity = () => {
+  const [activityData, setActivityData] = useState([]);
+  const [showAddAct, setAddAct] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${config.apiBaseUrl}backend/ADMIN_PHP/getNotactiveAct.php`)
+      .then((response) => {
+        setActivityData(response.data);
+        setLoading(false);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("Error on fetching  : ", error);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(Number(event.target.value));
+    setPage(0);
+  };
+
+  //search
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredActivityData = activityData.filter(
+    (activity) =>
+      activity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      activity.price.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      activity.duration.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      activity.image.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(activityData.length / rowsPerPage);
+  return (
+    <>
+      <div className="activity">
+        <Sideba />
+        <div className="activity-content">
+          <div className="top">
+            <div className="left">
+              <h6>Lake Biodiversity</h6>
+            </div>
+
+            <div className="right2">
+              <div className="search">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />{" "}
+                <i className="bi bi-search"></i>
+              </div>
+              <button onClick={() => setAddAct(!showAddAct)}>ADD NEW</button>
+            </div>
+          </div>
+          <div className="content">
+            <table>
+              <thead>
+                <tr>
+                  <th>Act Name</th>
+                  <th>Price</th>
+                  <th>Duration</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <div className="loader"></div>
+                ) : (
+                  filteredActivityData
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data) => (
+                      <tr key={data.act_id}>
+                        <td>{data.name}</td>
+                        <td>{data.price}</td>
+                        <td>{data.duration}</td>
+                        <td>
+                          <img
+                            style={{ height: "50px", width: "50px" }}
+                            src={`${config.apiBaseUrl}backend/ADMIN_PHP/uploads/${data.image}`}
+                            alt=""
+                          />
+                        </td>
+                        <td
+                          style={{
+                            whiteSpace: "nowrap",
+                            padding: "15px",
+                            width: "10px",
+                          }}
+                        >
+                          <button className="btn-ban">NOT ACTIVE</button>
+                        </td>
+                      </tr>
+                    ))
+                )}
+              </tbody>
+            </table>
+            <div className="pagination">
+              <button
+                onClick={() => handleChangePage(page - 1)}
+                disabled={page === 0}
+              >
+                Previous
+              </button>
+              <span>
+                Page {page + 1} of {totalPages}
+              </span>
+              <button
+                onClick={() => handleChangePage(page + 1)}
+                disabled={page >= totalPages - 1}
+              >
+                Next
+              </button>
+              <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showAddAct && <Addbiodiversity closeAddact={() => setAddAct(false)} />}
+    </>
+  );
+};
+
+export default Biodiversity;
