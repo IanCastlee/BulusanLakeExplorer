@@ -1,10 +1,10 @@
 
 
 <?php
-$host = "localhost"; // Your host name
-$username = "root"; // Your database username
-$password = ""; // Your database password
-$dbname = "blexplorer"; // Your database name
+$host = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "blexplorer"; 
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);

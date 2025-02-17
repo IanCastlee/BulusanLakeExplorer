@@ -1,17 +1,18 @@
 import "./sidebar.scss";
 import { Link } from "react-router-dom";
-import profileimage from "../../assets/hckr.webp";
+import profileimage from "../../assets/user (8).png";
 import { useContext, useState, useEffect } from "react";
 import Signup from "../../pages/signup/Signup";
 import { SidebarContext } from "../../context/Sidebarcontext";
 import axios from "axios";
 import config from "../../BaseURL";
+import pp from "../../assets/chat-bot.png";
 
 const Sidebar = ({ setSidebar, showSidebar2 }) => {
   const [showSignin, setShowSignin] = useState(false);
   // const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
-  const { userInfo, userid, notifCount, fetchUserData, theme, toggleTheme } =
+  const { userInfo, userid, unclicked, fetchUserData, theme, toggleTheme } =
     useContext(SidebarContext);
 
   // Handle logout
@@ -44,12 +45,19 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
       ></div>
       <div className={`side-bar ${showSidebar2 ? "show" : ""}`}>
         {userid != 0 ? (
-          <div className="wrapper">
+          <Link to={`/user-profile/${userInfo.user_id}`} className="wrapper">
             <div className="profile">
-              <img src={profileimage} alt="" />
+              <img
+                src={
+                  userInfo.profilePic
+                    ? `${config.apiBaseUrl}backend/uploads/${userInfo.profilePic}`
+                    : profileimage
+                }
+                alt=""
+              />
               <span>{userInfo.username}</span>
             </div>
-          </div>
+          </Link>
         ) : (
           ""
         )}
@@ -57,12 +65,12 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
         {userid != 0 ? (
           <div className="sidebar-bottom-wrapper">
             <Link
-              to="/chat/"
+              to="/message/"
               style={{ position: "relative" }}
               className="icon-wrapper"
             >
-              <i className="bi bi-chat-text"></i> Message
-              <div
+              {/* <i className="bi bi-chat-text"></i> Chat */}
+              {/* <div
                 style={{
                   position: "absolute",
                   padding: "3px",
@@ -83,11 +91,17 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
                 className="dot"
               >
                 2
-              </div>
+              </div> */}
+              <img src={pp} alt="" style={{ width: "30px", height: "30px" }} />
+              ChatBot
             </Link>
             <Link className="icon-wrapper" to={`/mybooking/${userid}`}>
               {" "}
               <i className="bi bi-calendar2-event"></i> Reservation{" "}
+            </Link>
+            <Link className="icon-wrapper" to="/fees/">
+              {" "}
+              <i className="bi bi-cash-coin"></i> Other fees{" "}
             </Link>
             <Link
               style={{ position: "relative" }}
@@ -95,7 +109,7 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
               to="/notification/"
             >
               <i className="bi bi-bell"></i> Notification
-              {notifCount > 0 && (
+              {unclicked > 0 && (
                 <div
                   style={{
                     position: "absolute",
@@ -116,7 +130,7 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
                   }}
                   className="dot"
                 >
-                  {notifCount}
+                  {unclicked}
                 </div>
               )}
             </Link>
@@ -131,10 +145,7 @@ const Sidebar = ({ setSidebar, showSidebar2 }) => {
           ) : (
             ""
           )}
-          <Link className="icon-wrapper">
-            {" "}
-            <i className="bi bi-gear"></i> Setting{" "}
-          </Link>
+
           <Link className="icon-wrapper" onClick={toggleTheme}>
             {" "}
             <i

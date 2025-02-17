@@ -4,26 +4,24 @@ include("./conn.php");
 
 session_start();
 $currentUserId = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
-$canceled = 'canceled';
 
-if ($stmt = $conn->prepare("SELECT b.*, a.name  FROM booking AS b JOIN activities AS a ON b.act_id = a.act_id WHERE b.status = ? AND b.user_id != ?")) {
-  $stmt->bind_param("si", $canceled, $currentUserId);
+$response = [];
+
+if ($stmt = $conn->prepare("SELECT  * FROM notifications WHERE reciever = ? ORDER BY notif_id DESC")) {
+  $stmt->bind_param("i", $currentUserId);
   $stmt->execute();
   $result = $stmt->get_result();
 
   $notifications = [];
 
   while ($row = $result->fetch_assoc()) {
-    $message = "Hey, There was a user who canceled their " . $row['name'] . " booking (booked for " . $row['booked_date'] . ")";
-    $notifications[] = [
-      'bookedid' => $row['booked_id'],
-      'message' => $message,
-    ];
+    $notifications[] = $row;
   }
-  echo json_encode($notifications);
+  $response['notifications'] = $notifications;
   $stmt->close();
 } else {
-  echo json_encode(['error' => "Failed to fetch data"]);
+  $response['error'] = "Failed to fetch data";
 }
 
+echo json_encode($response);
 $conn->close();

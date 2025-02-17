@@ -1,29 +1,33 @@
 :root {
-  --navbar-color: #242526;
+  --navbar-color: #ffffff;
 
-  --background-color: #242526;
-  --background-dark: #242526;
-  --background-soft: #272829;
+  --background-color: #f2f3f5;
+  --background-dark: #ffffff;
+  --background-soft: #f2f3f5;
 
-  --rightbgc: #242526;
+  --rightbgc: #ffffffff;
 
-  --comment-card: #272829;
+  --comment-card: #f2f4f7;
 
-  --main-bgc: #18191a;
-  --main-bgc2: #18191a;
+  --main-bgc: #ffffff;
+  --main-bgc2: #c4c7c9;
 
-  --button-color: #3a3b3c;
+  --button-color: #dfe3ee;
 
-  --wrapper-color: #3a3b3c;
-  --wrapper-post-color: #3a3b3c;
+  --wrapper-color: #f0f2f5;
+  --wrapper-post-color: #dfe3ee;
 
-  --border-color: #434242;
+  --border-color: lightgray;
 
-  --primary-text-color: #e4e6eb;
-  --secondary-text-color: #b0b3b8;
-  --dark-text: #b0b3b8;
+  --primary-text-color: #1c1e21;
+  --secondary-text-color: #606770;
+  --thersary-text-color: #d7dadf;
 
-  --hover-color: #434242;
+  --dark-text: #1c1e21;
+
+  --thumb: #dfe3ee;
+
+  --hover-color: #e9ebee;
 }
 
 /* Dark mode variables */
@@ -49,7 +53,11 @@
 
   --primary-text-color: #e4e6eb;
   --secondary-text-color: #b0b3b8;
+  --thersary-text-color: #d7dadf;
+
   --dark-text: #b0b3b8;
+
+  --thumb: #94979b;
 
   --hover-color: #434242;
 }
@@ -78,7 +86,11 @@
 
   --primary-text-color: #1c1e21;
   --secondary-text-color: #606770;
+  --thersary-text-color: #303235;
+
   --dark-text: #1c1e21;
+
+  --thumb: #dfe3ee;
 
   --hover-color: #e9ebee;
 }

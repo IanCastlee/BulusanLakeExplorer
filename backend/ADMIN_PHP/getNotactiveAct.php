@@ -1,14 +1,8 @@
 <?php
-// header('Access-Control-Allow-Origin: http://blsnadmin.free.nf/');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+include("../header.php");
+include("../conn.php");
 
-include("./conn.php");
-
-
-
-if ($stmt =  $conn->prepare("SELECT * FROM activities")) {
+if ($stmt =  $conn->prepare("SELECT * FROM activities WHERE status = 'not active'")) {
     $stmt->execute();
     $result = $stmt->get_result();
     $activities = [];

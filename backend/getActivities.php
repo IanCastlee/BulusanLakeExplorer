@@ -2,10 +2,9 @@
 include("./header.php");
 header('Content-Type: application/json');
 
-// Include your database connection
 include("./conn.php");
 
-$getAct = mysqli_query($conn, "SELECT * FROM activities");
+$getAct = mysqli_query($conn, "SELECT * FROM activities WHERE status = 'active'");
 $activities = [];
 
 while ($row = mysqli_fetch_assoc($getAct)) {

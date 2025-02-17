@@ -1,64 +1,214 @@
 import "./notif.scss";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import config from "../../BaseURL";
+import axios from "axios";
 import { SidebarContext } from "../../context/Sidebarcontext";
 
 const Notif = () => {
-  const { notifData, handleCardClick, clickedCards } =
-    useContext(SidebarContext);
+  const { userid, getUnclickedNotif } = useContext(SidebarContext);
+  const [notif, setNotif] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [showAll, setShowAll] = useState(false);
+  const [clickedNotif, setClickedNotif] = useState(null);
+  const [clickedNotifShow, setClickedNotifShow] = useState(false);
 
-  const handleShowMore = () => {
-    setShowAll(true);
+  const [clickedNotifCaption, setClickedNotifCaption] = useState(null);
+  const [clickedNotifContent, setClickedNotifContent] = useState(null);
+  const [clickedNotifShowCap, setClickedNotifShowCap] = useState(false);
+
+  const clicked_notif = (image_post) => {
+    setClickedNotif(image_post);
+    setClickedNotifShow(true);
   };
 
-  const filteredNotifData = showAll ? notifData : notifData.slice(0, 8);
+  const clicked_notif_caption = (caption, content) => {
+    setClickedNotifCaption(caption);
+    setClickedNotifContent(content);
+    setClickedNotifShowCap(true);
+  };
+
+  const fetchNotif = () => {
+    axios
+      .get(`${config.apiBaseUrl}backend/getCanceledBookingNotif.php`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("first", response.data);
+        setNotif(response.data.notifications || []);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user info:", error);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchNotif();
+  }, []);
+
+  const handleClickedNotif = (notif_id) => {
+    const formdata = new FormData();
+    formdata.append("notif_id", notif_id);
+    axios
+      .post(`${config.apiBaseUrl}backend/updateClickNotif.php`, formdata, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data.success);
+        fetchNotif();
+        getUnclickedNotif();
+      })
+      .catch((error) => {
+        console.log("Error : ", error);
+      });
+  };
 
   return (
-    <div className="notif">
-      <div className="wrappern">
-        <div className="titlen">
-          <h6>Notifications</h6>
-        </div>
-        {filteredNotifData.length > 0 ? (
-          filteredNotifData.map((notif) => (
-            <div
-              key={notif.bookedid}
-              onClick={() => handleCardClick(notif.bookedid)}
-            >
-              <div
-                className={`card ${
-                  clickedCards.includes(notif.bookedid) ? "clicked" : ""
-                }`}
-              >
-                <span>Canceled Booking</span>
-                <div className="rightn">
-                  <i className="bi bi-journal-x"></i>
-                  <p className="msg">{notif.message}</p>
-                </div>
-                <div className="bot">
-                  <Link
-                    to={`/mybooking/${notif.userid}`}
-                    onClick={() => handleCardClick(notif.bookedid)}
+    <>
+      <div className="notif">
+        <div className="wrappern">
+          <div className="titlen">
+            <h6>Notifications</h6>
+          </div>
+
+          <div>
+            {isLoading ? (
+              <span className="loader"></span>
+            ) : notif.length > 0 ? (
+              notif.map((n) => (
+                <div
+                  className={`card ${n.status === "clicked" ? "clicked" : ""}`}
+                  key={n.notif_id}
+                  onClick={() => handleClickedNotif(n.notif_id)}
+                >
+                  <div className="top">
+                    {n.title === "Post removal" ||
+                    n.title === "Post Approved" ? (
+                      <i className="bi bi-image"></i>
+                    ) : n.title === "Post Caption Removal" ? (
+                      <i className="bi bi-chat-left-text"></i>
+                    ) : (
+                      <i className="bi bi-calendar2-day"></i>
+                    )}
+                    <div className="title-wrapper">
+                      <span>{n.title}</span>
+
+                      <p>{n.createdAt}</p>
+                    </div>
+                  </div>
+                  <div className="rightn">
+                    <p
+                      className={`msg ${
+                        n.status === "clicked" ? "clicked" : ""
+                      }`}
+                    >
+                      {n.content}
+                    </p>
+                  </div>
+                  <div
+                    className="bot"
+                    style={{ marginTop: "10px", cursor: "pointer" }}
                   >
-                    Change schedule
-                  </Link>
+                    {n.title === "Post removal" ? (
+                      <span
+                        className="span"
+                        style={{ fontSize: "10px" }}
+                        onClick={() => clicked_notif(n.image_post)}
+                      >
+                        View Image
+                      </span>
+                    ) : n.title === "Post Approved" ? (
+                      <Link
+                        className="span"
+                        style={{ fontSize: "10px" }}
+                        to={`/user-profile/${userid}`}
+                      >
+                        View Post
+                      </Link>
+                    ) : n.title === "Post Caption Removal" ? (
+                      <span
+                        className="span"
+                        style={{ fontSize: "10px" }}
+                        onClick={() =>
+                          clicked_notif_caption(n.caption, n.content)
+                        }
+                      >
+                        View Caption
+                      </span>
+                    ) : (
+                      <span className="span" style={{ fontSize: "10px" }}>
+                        {n.status === "clicked"
+                          ? "Read"
+                          : "Click to mark as read"}
+                      </span>
+                    )}
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div
+                style={{
+                  color: "gray",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "200px",
+                  flexDirection: "column",
+                }}
+              >
+                <i
+                  class="bi bi-bell-fill"
+                  style={{ fontSize: "70px", color: "gray" }}
+                ></i>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No notifications yet</p>
-        )}
-        {!showAll && notifData.length > 8 && (
-          <button className="show-more-btn" onClick={handleShowMore}>
-            Show more
-          </button>
-        )}
-        <p></p>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+      {clickedNotifShow && (
+        <div className="viewImageModal">
+          <div className="top">
+            <span>Post Removed by Admin</span>
+
+            <i
+              className="bi bi-x"
+              onClick={() => setClickedNotifShow(false)}
+            ></i>
+          </div>
+
+          <div className="content">
+            <img
+              // src={`${config.apiBaseUrl}/backend/uploads/${clickedNotif} `}
+              src={`https://bulusanlakeexplorer.kesug.com/backend/uploads/${clickedNotif} `}
+              alt=""
+            />
+          </div>
+        </div>
+      )}
+      {clickedNotifShow && <div className="viewImageModalOverlay"></div>}{" "}
+      {clickedNotifShowCap && (
+        <div className="viewImageModal">
+          <div className="top">
+            <span>Caption Removed by Admin</span>
+
+            <i
+              className="bi bi-x"
+              onClick={() => setClickedNotifShowCap(false)}
+            ></i>
+          </div>
+
+          <div className="content">
+            <p style={{ color: "gray" }}>{clickedNotifContent}</p>
+            <p style={{ color: "gray", marginTop: "20px" }}>
+              Your Caption : {clickedNotifCaption}
+            </p>
+          </div>
+        </div>
+      )}
+      {clickedNotifShowCap && <div className="viewImageModalOverlay"></div>}{" "}
+    </>
   );
 };
 

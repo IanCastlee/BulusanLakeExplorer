@@ -1,15 +1,20 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+include("../header.php");
+include("../conn.php");
 
-include("./conn.php");
+session_start();
+$currentUserId = isset($_SESSION['userid']) ? $_SESSION['userid'] : null;
 
-$data = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-if (isset($data['booked_id'])) {
-    $booked_id = $data['booked_id'];
+    $userID = $_POST['userID'];
+    $title = $_POST['title'];
+    $body = $_POST['body'];
+    $createdAt = date("Y-m-d H:i:s");
+    $isCliked = "uncliked";
+    $booked_id = $_POST['booked_id'];
     $status = "reserved";
+    $sender = 27;
 
     $query = "UPDATE booking SET status = ? WHERE booked_id = ?";
 
@@ -17,7 +22,26 @@ if (isset($data['booked_id'])) {
         $stmt->bind_param('si', $status, $booked_id);
 
         if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
+
+            if ($userID && $currentUserId) {
+                $stmt_insetNotif = $conn->prepare("INSERT INTO notifications (sender, reciever, title, content, createdAt, status)VALUES(?,?,?,?,?,?)");
+                $stmt_insetNotif->bind_param("iissss", $currentUserId, $userID, $title, $body, $createdAt, $isCliked);
+
+                if ($stmt_insetNotif->execute()) {
+                    // Combine all responses into one
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Notification sent'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'error' => 'Failed to send notification'
+                    ]);
+                }
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Sender or receiver ID is empty']);
+            }
         } else {
             echo json_encode(['success' => false, 'error' => 'Failed to execute statement']);
         }
@@ -27,7 +51,7 @@ if (isset($data['booked_id'])) {
         echo json_encode(['success' => false, 'error' => 'Failed to prepare statement']);
     }
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid input']);
+    echo json_encode(['success' => false, 'error' => 'Invalid request']);
 }
 
 $conn->close();

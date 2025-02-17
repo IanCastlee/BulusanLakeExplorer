@@ -5,19 +5,20 @@
   box-sizing: border-box;
 
   /* Custom scrollbar for WebKit browsers */
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 12px;
-  }
+  } */
 
-  ::-webkit-scrollbar-track {
+  /* ::-webkit-scrollbar-track {
     background: var(--background-color);
-  }
+  } */
 
-  ::-webkit-scrollbar-thumb {
+  /* ::-webkit-scrollbar-thumb {
     background: #242526;
     border-radius: 6px;
-  }
+  } */
 }
+
 a {
   text-decoration: none;
   color: #e4e6eb;
@@ -27,39 +28,190 @@ a {
 }
 /* FEED RIGHT COMMENTS */
 .right:hover::-webkit-scrollbar-track {
-  background: #18191a;
+  background: var(--button-color);
 }
 .right:hover::-webkit-scrollbar-thumb {
-  background: #3a3b3c;
+  background: gray;
   border-radius: 6px;
 }
 
 /* FEED LEFT COMMENTS */
 .left:hover::-webkit-scrollbar-track {
-  background: #18191a;
+  background: var(--button-color);
 }
 .left:hover::-webkit-scrollbar-thumb {
-  background: #3a3b3c;
+  background: gray;
   border-radius: 6px;
 }
 
 /* INDEX */
 .index-content:hover::-webkit-scrollbar-track {
-  background: var(--background-color);
+  background-color: gray;
 }
 .index-content:hover::-webkit-scrollbar-thumb {
   background: #3a3b3c;
   border-radius: 6px;
 }
 
-/* FEEDBACK */
-.feedback:hover::-webkit-scrollbar-track {
-  background: #18191a;
+/* guide */
+.guide::-webkit-scrollbar {
+  width: 12px;
 }
-.feedback:hover::-webkit-scrollbar-thumb {
-  background: #3a3b3c;
+.guide:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.guide:hover::-webkit-scrollbar-thumb {
+  background: gray;
   border-radius: 6px;
 }
+
+/* right-book */
+.right-book::-webkit-scrollbar {
+  width: 12px;
+}
+.right-book:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.right-book:hover::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
+
+/* FEEDBACK */
+.feedback::-webkit-scrollbar {
+  width: 12px;
+}
+.feedback:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.feedback:hover::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
+
+/* .all-reviews-modal */
+.all-reviews-modal::-webkit-scrollbar {
+  width: 12px;
+}
+.all-reviews-modal:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.all-reviews-modal:hover::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
+
+/* booked_timee */
+
+.booked_timee::-webkit-scrollbar {
+  width: 12px;
+}
+.booked_timee:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.booked_timee:hover::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
+
+/* //chat */
+.chat-box::-webkit-scrollbar {
+  width: 12px;
+}
+.chat-box:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.chat-box:hover::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 6px;
+}
+
+/* terms-modal */
+.terms-modal::-webkit-scrollbar {
+  width: 10px;
+}
+.terms-modal:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.terms-modal:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* upload-modal */
+.upload-modal::-webkit-scrollbar {
+  width: 10px;
+}
+.upload-modal:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.upload-modal:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* mybooking */
+.mybooking::-webkit-scrollbar {
+  width: 10px;
+}
+.mybooking:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.mybooking:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* user-profile */
+.user-profile::-webkit-scrollbar {
+  width: 10px;
+}
+.user-profile:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.user-profile:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* wrappern */
+.wrappern::-webkit-scrollbar {
+  width: 10px;
+}
+.wrappern:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.wrappern:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* ACTINFO */
+.act-info::-webkit-scrollbar {
+  width: 10px;
+}
+.act-info:hover::-webkit-scrollbar-track {
+  background: var(--button-color);
+}
+.act-info:hover::-webkit-scrollbar-thumb {
+  /* background: var(--secondary-text-color); */
+  border-radius: 6px;
+  background: gray;
+}
+
+/* FEED */
+
+.feed {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+}
+
 /* error */
 .err {
   font-size: 14px;

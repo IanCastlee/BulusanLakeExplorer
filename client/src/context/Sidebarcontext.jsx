@@ -9,6 +9,19 @@ const Sidebarcontext = ({ children }) => {
   const [userid, setUserId] = useState(0);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
+  const [data2, setData2] = useState([]);
+
+  const [unclicked, setUncliked] = useState(null);
+
+  // const [count, setCount] = useState(0);
+
+  const [updateBookedData, setUpdateBookedData] = useState({
+    user_id: "",
+    act_id: "",
+    booked_id: "",
+    date: "",
+  });
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -19,6 +32,7 @@ const Sidebarcontext = ({ children }) => {
     localStorage.setItem("theme", newTheme);
   };
 
+  //console.log("Count Reate name__ : ", count);
   // Fetch user data
   const fetchUserData = () => {
     axios
@@ -30,7 +44,7 @@ const Sidebarcontext = ({ children }) => {
           setUserInfo(response.data.userInfo);
           setUserId(response.data.userid);
         } else {
-          console.error("Error: Missing user info or user id in response data");
+          console.error("Statud : User not signed in");
         }
       })
       .catch((error) => {
@@ -40,82 +54,47 @@ const Sidebarcontext = ({ children }) => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
-
-  // NOTIFICATION DATA
-  const [notifData, setNotifData] = useState([]);
-  const [clickedCards, setClickedCards] = useState([]);
-  const [notifCount, setNotifCount] = useState(0);
-
-  // Fetch notifications data
-  useEffect(() => {
-    axios
-      .get(`${config.apiBaseUrl}backend/getCanceledBookingNotif.php`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setNotifData(response.data);
-      })
-      .catch((error) => {
-        console.log("Error on fetching notifications: ", error);
-      });
-  }, []);
-
-  // Retrieve clicked card IDs from session storage when userid changes
-  useEffect(() => {
-    if (userid) {
-      const savedClickedCards = sessionStorage.getItem(
-        `clickedCards_${userid}`
-      );
-      setClickedCards(savedClickedCards ? JSON.parse(savedClickedCards) : []);
-    }
   }, [userid]);
 
-  // Clear clicked cards from session storage if notifData is empty
-  useEffect(() => {
-    if (notifData.length === 0) {
-      sessionStorage.removeItem(`clickedCards_${userid}`);
-      setClickedCards([]);
-    }
-  }, [notifData, userid]);
+  const getUnclickedNotif = () => {
+    axios
+      .get(
+        //  `${config.apiBaseUrl}/backend/getUnclickedNotif.php?userId=${userid}`,
+        `https://bulusanlakeexplorer.kesug.com/backend/getUnclickedNotif.php?userId=${userid}`,
 
-  const handleCardClick = (id) => {
-    setClickedCards((prevClickedCards) => {
-      const newClickedCards = prevClickedCards.includes(id)
-        ? prevClickedCards
-        : [...prevClickedCards, id];
-
-      // Save the updated clicked cards to session storage, specific to the user
-      sessionStorage.setItem(
-        `clickedCards_${userid}`,
-        JSON.stringify(newClickedCards)
-      );
-
-      // Update notification count
-      setNotifCount(notifData.length - newClickedCards.length);
-
-      return newClickedCards;
-    });
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log("Unclicked : ", response.data.count);
+        setUncliked(response.data.count);
+      })
+      .catch((error) => {
+        console.log("ERROR : ", error);
+      });
   };
-
-  // Update notifCount when notifData or clickedCards change
   useEffect(() => {
-    setNotifCount(notifData.length - clickedCards.length);
-  }, [notifData, clickedCards]);
+    getUnclickedNotif();
+  }, [userid]);
 
   return (
     <SidebarContext.Provider
       value={{
         userInfo,
         userid,
-        notifData,
-        notifCount,
-        setNotifCount,
-        handleCardClick,
-        clickedCards,
         fetchUserData,
         theme,
         toggleTheme,
+        setUpdateBookedData,
+        updateBookedData,
+        setData2,
+        data2,
+        unclicked,
+        setUncliked,
+        getUnclickedNotif,
+        // setCount,
+        // count,
       }}
     >
       {children}

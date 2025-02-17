@@ -1,14 +1,17 @@
 <?php
 include("./header.php");
-
-
 include("./conn.php");
 
-$data = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $booked_id = $_POST['booked_id'];
+    $booked_date = $_POST['booked_date'];
+    $user_id = $_POST['user_id'];
+    $name = $_POST['name'];
+    $createdAt = date("Y-m-d H:i:s");
 
-if (isset($data['booked_id'])) {
-    $booked_id = $data['booked_id'];
     $status = "canceled";
+
+    $response = [];
 
     $query = "UPDATE booking SET status = ? WHERE booked_id = ?";
 
@@ -16,17 +19,22 @@ if (isset($data['booked_id'])) {
         $stmt->bind_param('si', $status, $booked_id);
 
         if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
+            $response['success'] = true;
         } else {
-            echo json_encode(['success' => false, 'error' => 'Failed to execute statement']);
+            $response['success'] = false;
+            $response['error'] = 'Failed to execute statement';
         }
 
         $stmt->close();
     } else {
-        echo json_encode(['success' => false, 'error' => 'Failed to prepare statement']);
+        $response['success'] = false;
+        $response['error'] = 'Failed to prepare statement';
     }
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid input']);
+    $response['success'] = false;
+    $response['error'] = 'Invalid input';
 }
+
+echo json_encode($response);
 
 $conn->close();

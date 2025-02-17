@@ -1,12 +1,9 @@
 <?php
-// header('Access-Control-Allow-Origin: http://blsnadmin.free.nf/');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+include("../header.php");
+include("../conn.php");
 
-include("./conn.php");
 
-if ($stmt =  $conn->prepare("SELECT b.*, u.fullname,u.address, a.name, a.price FROM booking AS b JOIN users AS u ON b.user_id = u.user_id JOIN activities AS a ON b.act_id = a.act_id WHERE b.status = 'canceled' ORDER BY b.booked_id ASC")) {
+if ($stmt =  $conn->prepare("SELECT b.*, u.fullname,u.address, a.name, a.price, cr.reason FROM booking AS b JOIN users AS u ON b.user_id = u.user_id JOIN activities AS a ON b.act_id = a.act_id JOIN cancelled_reservation AS  cr ON cr.booked_id =  b.booked_id  WHERE b.status = 'cancelled' ORDER BY b.booked_id ASC")) {
     $stmt->execute();
     $result = $stmt->get_result();
 

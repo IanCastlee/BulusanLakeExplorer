@@ -1,12 +1,13 @@
-.user-active {
+.uactive {
   display: flex;
   height: calc(100vh - 70px);
   width: 100%;
-  background-color: #18191a;
+  background-color: #f8eded;
   overflow-y: auto;
+  padding-left: 15%;
 
   .user-content {
-    width: 85%;
+    width: 100%;
     height: 100%;
     padding: 20px;
 
@@ -21,9 +22,9 @@
         gap: 10px;
 
         h6 {
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 700;
-          color: #fff;
+          color: #434242;
         }
         .opp {
           i {
@@ -45,10 +46,11 @@
           height: 36px;
           padding-left: 15px;
           font-size: 14px;
-          color: #b0b3b8;
+          color: #434242;
           border-radius: 25px;
           border: none;
-          background-color: #434242;
+          background-color: #fff;
+          border: 1px solid lightgrey;
           width: 250px;
           justify-content: space-between;
           padding: 0 20px;
@@ -57,13 +59,13 @@
             height: 100%;
             background-color: transparent;
             border: none;
-            color: #b0b3b8;
+            color: #434242;
           }
           input:focus {
             outline: none;
           }
           i {
-            color: #fff;
+            color: #434242;
             font-size: 25px;
             cursor: pointer;
           }
@@ -94,12 +96,13 @@
         thead {
           position: sticky;
           top: -1px;
+
           tr {
-            background-color: #18191a;
+            background-color: #434242;
             color: #fff;
 
             th {
-              border: 1px solid gray;
+              border: 1px solid lightgrey;
               padding: 10px;
               text-align: center;
               font-size: 12px;
@@ -108,31 +111,54 @@
         }
         tbody {
           tr {
-            background-color: #434242;
-            color: #b0b3b8;
+            background-color: #fff;
+            color: #fff;
+
+            &.green {
+              background-color: rgb(128, 240, 128);
+              color: #434242;
+            }
 
             &:hover {
-              background-color: gray;
+              background-color: #eeedeb;
             }
 
             td {
-              border: 1px solid gray;
+              border: 1px solid lightgrey;
               padding: 5px;
               text-align: center;
               font-size: 12px;
+              color: #434242;
 
               .btn-ban {
                 background-color: red;
-                color: #fff;
+                color: lightgray;
                 border: none;
                 font-size: 12px;
                 border-radius: 3px;
-                font-weight: 500;
+                font-weight: 700;
+                width: auto;
                 cursor: pointer;
                 padding: 5px 10px;
 
                 &:hover {
-                  color: #b0b3b8;
+                  color: #fff;
+                }
+              }
+              .btn-update {
+                background-color: rgb(76, 49, 228);
+                color: lightgray;
+                border: none;
+                font-size: 12px;
+                border-radius: 3px;
+                font-weight: 700;
+                margin-left: 5px;
+
+                cursor: pointer;
+                padding: 5px 10px;
+
+                &:hover {
+                  color: #fff;
                 }
               }
             }
@@ -151,13 +177,13 @@
       .pagination {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: start;
         margin-top: 10px;
         gap: 7px;
 
         button {
           background-color: #434242;
-          color: #b0b3b8;
+          color: #fff;
           font-size: 12px;
           padding: 5px;
           border: none;
@@ -166,23 +192,23 @@
         }
 
         span {
-          color: #b0b3b8;
+          color: #434242;
           font-size: 12px;
         }
 
         button {
-          background-color: #434242;
-          color: #b0b3b8;
+          background-color: green;
+          color: #fff;
           font-size: 12px;
-          padding: 5px;
+          padding: 3px;
           border: none;
           cursor: pointer;
           border-radius: 3px;
         }
 
         select {
-          background-color: #434242;
-          color: #b0b3b8;
+          background-color: green;
+          color: #fff;
           font-size: 12px;
           padding: 5px;
           border: none;
@@ -194,5 +220,362 @@
         }
       }
     }
+  }
+}
+.ask-modal {
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 10px 10px 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  p {
+    font-size: 12px;
+    color: #434242;
+  }
+
+  .bot {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: 10px;
+    margin-top: 30px;
+
+    .btn-del {
+      background-color: red;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: rgb(160, 5, 5);
+      }
+    }
+
+    .btn-cancel {
+      background-color: rgb(68, 63, 63);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: rgb(87, 81, 81);
+      }
+    }
+  }
+}
+.ask-modal-overlay {
+  position: fixed;
+  z-index: 998;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 789px) {
+  .uactive {
+    display: flex;
+    height: calc(100vh - 60px);
+    width: 100%;
+    background-color: #f8eded;
+    overflow-y: auto;
+    padding-left: 0;
+
+    .user-content {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          h6 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #434242;
+          }
+          .opp {
+            i {
+              font-size: 18px;
+              cursor: pointer;
+              color: #b0b3b8;
+            }
+          }
+        }
+
+        .right2 {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .search {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            padding-left: 15px;
+            font-size: 14px;
+            color: #434242;
+            border-radius: 25px;
+            border: none;
+            background-color: #fff;
+            border: 1px solid lightgrey;
+            width: 250px;
+            justify-content: space-between;
+            padding: 0 20px;
+            input {
+              width: 80%;
+              height: 100%;
+              background-color: transparent;
+              border: none;
+              color: #434242;
+            }
+            input:focus {
+              outline: none;
+            }
+            i {
+              color: #434242;
+              font-size: 25px;
+              cursor: pointer;
+            }
+          }
+          button {
+            height: 36px;
+            font-size: 12px;
+            color: #fff;
+            border-radius: 7px;
+            border: none;
+            background-color: green;
+            width: auto;
+            padding: 0 10px;
+          }
+        }
+      }
+
+      .active {
+        width: 100%;
+        margin-top: 10px;
+
+        // Table.scss
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+
+          thead {
+            position: sticky;
+            top: -1px;
+
+            tr {
+              background-color: #434242;
+              color: #fff;
+
+              th {
+                border: 1px solid lightgrey;
+                padding: 10px;
+                text-align: center;
+                font-size: 12px;
+              }
+            }
+          }
+          tbody {
+            tr {
+              background-color: #fff;
+              color: #fff;
+
+              &.green {
+                background-color: rgb(128, 240, 128);
+                color: #434242;
+              }
+
+              &:hover {
+                background-color: #eeedeb;
+              }
+
+              td {
+                border: 1px solid lightgrey;
+                padding: 5px;
+                text-align: center;
+                font-size: 12px;
+                color: #434242;
+
+                .btn-ban {
+                  background-color: red;
+                  color: lightgray;
+                  border: none;
+                  font-size: 12px;
+                  border-radius: 3px;
+                  font-weight: 700;
+                  width: auto;
+                  cursor: pointer;
+                  padding: 5px 10px;
+
+                  &:hover {
+                    color: #fff;
+                  }
+                }
+                .btn-update {
+                  background-color: rgb(76, 49, 228);
+                  color: lightgray;
+                  border: none;
+                  font-size: 12px;
+                  border-radius: 3px;
+                  font-weight: 700;
+                  margin-left: 5px;
+
+                  cursor: pointer;
+                  padding: 5px 10px;
+
+                  &:hover {
+                    color: #fff;
+                  }
+                }
+              }
+            }
+          }
+        }
+        h6 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 50px;
+          color: #434242;
+          font-size: 29px;
+        }
+
+        .pagination {
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          margin-top: 10px;
+          gap: 7px;
+
+          button {
+            background-color: #434242;
+            color: #fff;
+            font-size: 12px;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+          }
+
+          span {
+            color: #434242;
+            font-size: 12px;
+          }
+
+          button {
+            background-color: green;
+            color: #fff;
+            font-size: 12px;
+            padding: 3px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+          }
+
+          select {
+            background-color: green;
+            color: #fff;
+            font-size: 12px;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+          }
+          select:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+  .ask-modal {
+    position: fixed;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 10px 10px 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    p {
+      font-size: 12px;
+      color: #434242;
+    }
+
+    .bot {
+      display: flex;
+      width: 100%;
+      justify-content: end;
+      gap: 10px;
+      margin-top: 30px;
+
+      .btn-del {
+        background-color: red;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: rgb(160, 5, 5);
+        }
+      }
+
+      .btn-cancel {
+        background-color: rgb(68, 63, 63);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: rgb(87, 81, 81);
+        }
+      }
+    }
+  }
+  .ask-modal-overlay {
+    position: fixed;
+    z-index: 998;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.7);
   }
 }

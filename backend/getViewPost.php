@@ -11,11 +11,11 @@ if (empty($postID)) {
     exit();
 }
 
-if ($stmt = $conn->prepare("SELECT p.post_id, p.caption, p.status, p.createdAt, i.image_path, u.user_id, u.username
+if ($stmt = $conn->prepare("SELECT p.post_id, p.caption, p.status, p.createdAt, i.image_path, i.status, u.user_id, u.username
     FROM posts p
     JOIN users u ON u.user_id = p.user_id
     LEFT JOIN images i ON p.post_id = i.post_id
-    WHERE p.post_id = ?")) {
+    WHERE p.post_id = ?  AND  i.status = 1")) {
     $stmt->bind_param("i", $postID);
     $stmt->execute();
     $result = $stmt->get_result();

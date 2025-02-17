@@ -1,14 +1,14 @@
 <?php
-// header('Access-Control-Allow-Origin: http://blsnadmin.free.nf/');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+include("../header.php");
+include("../conn.php");
 
-include("./conn.php");
+$status = 1;
+$v_status = 1;
+$acc_type = 'admin_111';
 
 
+if ($stmt =  $conn->prepare("SELECT * FROM users WHERE status = '$status' AND verify_status = '$v_status' AND acc_type != '$acc_type' ")) {
 
-if ($stmt =  $conn->prepare("SELECT * FROM users")) {
     $stmt->execute();
     $result = $stmt->get_result();
     $users = [];

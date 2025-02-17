@@ -1,16 +1,27 @@
 import "./upload.scss";
-import pp from "../../assets/hckr.webp";
-import { useState } from "react";
+import pp from "../../assets/user (8).png";
+import { useContext, useState } from "react";
 import axios from "axios";
 import config from "../../BaseURL";
+import { SidebarContext } from "../../context/Sidebarcontext";
 
-export const Upload = ({ closeUploadModal }) => {
+export const Upload = ({ closeUploadModal, handleGetPost }) => {
+  const { userInfo } = useContext(SidebarContext);
+
   const [showPublicPrivate, setShowPublicPrivate] = useState(false);
   const [showPosting, setShowPosting] = useState(false);
   const [showPosted, setShowPosted] = useState(false);
   const [files, setFiles] = useState([]);
   const [caption, setCaption] = useState("");
   const [privacy, setPrivacy] = useState("public");
+
+  const [hashtag, setHashtag] = useState("");
+
+  const handleHashtagClick = (tag) => {
+    if (!hashtag.includes(tag)) {
+      setHashtag((prev) => (prev ? `${prev} ${tag}` : tag));
+    }
+  };
 
   const handleFileChange = (e) => {
     setFiles([...e.target.files]);
@@ -35,9 +46,10 @@ export const Upload = ({ closeUploadModal }) => {
       formData.append(`images[${index}]`, file);
     });
     formData.append("caption", caption);
+    formData.append("hashtag", hashtag);
     formData.append("privacy", privacy);
 
-    setShowPosting(true); // Show "Posting..." message
+    setShowPosting(true);
 
     try {
       const response = await axios.post(
@@ -52,22 +64,26 @@ export const Upload = ({ closeUploadModal }) => {
       );
 
       if (response.data.success) {
+        // Reset states after successful upload
         setFiles([]);
         setCaption("");
         setPrivacy("public");
-        setShowPosting(false); // Hide "Posting..." message
-        setShowPosted(true); // Show "Posted" message
+        setShowPosting(false);
+        setShowPosted(true);
+        handleGetPost();
         setTimeout(() => {
-          setShowPosted(false); // Hide "Posted" message after 2 seconds
-          closeModal(); // Close the modal after showing "Posted"
-        }, 2000);
+          setShowPosted(false);
+        }, 9000);
       } else {
-        console.error("Upload failed", response.data.errors);
-        setShowPosting(false); // Hide "Posting..." message if upload fails
+        setShowPosting(false);
+        setFiles([]);
+        if (response.data.errors && response.data.errors.length > 0) {
+          alert(response.data.errors.join("\n"));
+        }
       }
     } catch (error) {
       console.error("Upload failed", error);
-      setShowPosting(false); // Hide "Posting..." message if upload fails
+      setShowPosting(false);
     }
   };
 
@@ -76,51 +92,45 @@ export const Upload = ({ closeUploadModal }) => {
       <div className="upload-modal">
         <div className="upload-container">
           <div className="upload-top">
-            <span>Upload your captured</span>
+            <span>Create your post</span>
             <i className="bi bi-x-lg" onClick={closeUploadModal}></i>
+          </div>
+
+          <div className="note">
+            <p>
+              Note: Please ensure that all photos you upload are your own
+              original content and are directly related to Bulusan Lake and its
+              surroundings.
+            </p>
           </div>
 
           <div className="info-btnpost">
             <div className="pp-name-privacy">
-              <img src={pp} alt="" />
+              <img
+                src={
+                  userInfo.profilePic
+                    ? `${config.apiBaseUrl}backend/uploads/${userInfo.profilePic}`
+                    : pp
+                }
+                alt=""
+              />
 
               <div className="name-privacy">
-                <span>Name</span>
+                <span>{userInfo && userInfo.username}</span>
 
-                <div className="i-text">
-                  <i
-                    className={`bi bi-shield-check ${
-                      privacy === "private"
-                        ? "bi bi-shield-check"
-                        : "bi bi-globe-americas"
-                    }`}
-                    onClick={() => setShowPublicPrivate(!showPublicPrivate)}
-                  ></i>
-                  <p>{privacy}</p>
-
-                  {showPublicPrivate && (
-                    <>
-                      <div className="triangle"></div>
-                      <div className="private-public">
-                        <button onClick={() => handlePrivacyChange("public")}>
-                          Public
-                        </button>
-                        <button onClick={() => handlePrivacyChange("private")}>
-                          Private
-                        </button>
-                      </div>
-                    </>
-                  )}
-
-                  <i
-                    className="bi bi-caret-down-fill arrow-down"
-                    onClick={() => setShowPublicPrivate(!showPublicPrivate)}
-                  ></i>
-                </div>
+                <div className="i-text"></div>
               </div>
             </div>
           </div>
-
+          <div className="hashtag-wrapper">
+            <ul>
+              {["#Kayak", "#Balsa", "#Boating", "#Bulusan Lake"].map((tag) => (
+                <li key={tag} onClick={() => handleHashtagClick(tag)}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="input-upload-btn">
             <textarea
               name="caption"
@@ -129,7 +139,11 @@ export const Upload = ({ closeUploadModal }) => {
               value={caption}
               onChange={handleCaptionChange}
             ></textarea>
-
+            <input
+              type="text"
+              value={hashtag}
+              onChange={(e) => setHashtag(e.target.value)}
+            />
             <div className="btns">
               <div className="btn-text">
                 <label htmlFor="file">
@@ -140,6 +154,7 @@ export const Upload = ({ closeUploadModal }) => {
                   type="file"
                   multiple
                   id="file"
+                  accept="image/*"
                   onChange={handleFileChange}
                   style={{ display: "none" }}
                 />
@@ -169,14 +184,18 @@ export const Upload = ({ closeUploadModal }) => {
       {/* show after user click post */}
       {showPosting && (
         <div className="posting">
-          <p>Posting...</p>
+          <p>Uploading...</p>
         </div>
       )}
 
       {/* show after successful post */}
       {showPosted && (
         <div className="posted">
-          <p>Succesfully posted</p>
+          <p>
+            {" "}
+            Your post has been successfully uploaded. Please wait while the
+            admin reviews it before it appears in the feed.
+          </p>
         </div>
       )}
     </>

@@ -4,7 +4,7 @@ include("../conn.php");
 
 session_start();
 
-if ($stmt = $conn->prepare("SELECT c.*, u.fullname, ch.message, ch.createdAt FROM conversation AS c JOIN users AS u ON c.user_0 = u.user_id JOIN (SELECT convo_id, message, createdAt FROM chats AS ch1 WHERE ch1.msg_id = (SELECT MAX(ch2.msg_id) FROM chats AS ch2 WHERE ch2.convo_id = ch1.convo_id)) AS ch ON c.convo_id = ch.convo_id ORDER BY ch.createdAt DESC")) {
+if ($stmt = $conn->prepare("SELECT c.*, u.fullname,u.username, u.profilePic, ch.message, ch.createdAt FROM conversation AS c JOIN users AS u ON c.user_0 = u.user_id JOIN (SELECT convo_id, message, createdAt FROM chats AS ch1 WHERE ch1.msg_id = (SELECT MAX(ch2.msg_id) FROM chats AS ch2 WHERE ch2.convo_id = ch1.convo_id AND ch2.notanswered = 0)) AS ch ON c.convo_id = ch.convo_id ORDER BY ch.createdAt DESC")) {
     $stmt->execute();
     $result = $stmt->get_result();
 

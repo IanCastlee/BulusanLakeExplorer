@@ -1,12 +1,9 @@
 <?php
 
 include("./header.php");
-
-
-header("Content-Type: Application/json");
-
 include("./conn.php");
 
+header("Content-Type: Application/json");
 session_start();
 session_unset();
 session_destroy();

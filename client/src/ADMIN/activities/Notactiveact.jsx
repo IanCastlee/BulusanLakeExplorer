@@ -47,9 +47,36 @@ const Notactiveact = () => {
   );
 
   const totalPages = Math.ceil(activityData.length / rowsPerPage);
+
+  //handleSetAsActive
+  const handleSetAsActive = (act_id) => {
+    const formData = new FormData();
+    formData.append("act_id", act_id);
+
+    axios
+      .post(
+        `${config.apiBaseUrl}backend/ADMIN_PHP/updateActivityStatusA.php`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.success) {
+          setActivityData((prevData) =>
+            prevData.filter((act) => act.act_id !== act_id)
+          );
+        } else {
+          console.log(response.data.error);
+        }
+      });
+  };
+
   return (
     <>
-      <div className="activity">
+      <div className="nactivity">
         <Sideba />
         <div className="activity-content">
           <div className="top">
@@ -109,6 +136,7 @@ const Notactiveact = () => {
                         <button
                           style={{ backgroundColor: "green" }}
                           className="btn-ban"
+                          onClick={() => handleSetAsActive(data.act_id)}
                         >
                           ACTIVE
                         </button>

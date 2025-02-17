@@ -1,18 +1,171 @@
-.announcement {
-  width: 350px;
-  height: 450px;
-  background-color: #18191a;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  position: absolute;
-  top: 70px;
-  right: 5px;
-  z-index: 400;
-  padding: 20px 10px;
+// @import url("../../pages/SCSS/main.scss");
 
-  h3 {
-    text-align: center;
-    color: #fff;
-  }
-}
+// .announcement {
+//   width: 400px;
+//   max-height: 450px;
+//   //background-color: var(--navbar-color);
+//   box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//   -webkit-box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//   -moz-box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//   // border-bottom-left-radius: 10px;
+//   // border-bottom-right-radius: 10px;
+//   position: fixed;
+//   top: 65px;
+//   right: 3px;
+//   z-index: 999;
+//   padding: 20px;
+//   border-radius: 10px;
+//   background-color: rgba(0, 0, 0, 0.8);
+
+//   .announcement-top {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     gap: 20px;
+
+//     h3 {
+//       text-align: center;
+//       font-weight: 500;
+//       color: #fff;
+//       // color: var(--primary-text-color);
+//     }
+//     .close2 {
+//       cursor: pointer;
+//       color: #fff;
+//     }
+//   }
+
+//   .content {
+//     width: 100%;
+//     margin-top: 50px;
+//     display: flex;
+//     flex-direction: column;
+//     padding-bottom: 20px;
+//     border: 1px solid rgb(56, 50, 50);
+//     padding: 10px;
+//     border-radius: 5px;
+//     .title-wrapper {
+//       width: 100%;
+//       display: flex;
+//       justify-content: start;
+//       align-items: center;
+//       font-weight: 700;
+//       margin-bottom: 10px;
+//       gap: 5px;
+
+//       i {
+//         font-size: 20px;
+//         color: green;
+//       }
+
+//       .title {
+//         font-size: 16px;
+//         font-weight: 300;
+//         color: #fff;
+
+//         // color: var(--secondary-text-color);
+//       }
+//     }
+
+//     .announcement-wrapper {
+//       width: 100%;
+
+//       p {
+//         font-size: 14px;
+//         color: #fff;
+//         font-weight: 300;
+
+//         // color: var(--secondary-text-color);
+//       }
+//     }
+
+//     .bot {
+//       display: flex;
+//       width: 100%;
+//       justify-content: end;
+//       margin-top: 20px;
+//       p {
+//         font-size: 12px;
+//         font-weight: 100;
+//         color: #cac3c3;
+//       }
+//     }
+//   }
+// }
+
+// @media (max-width: 789px) {
+//   .announcement {
+//     width: 100%;
+//     max-width: 100vh;
+//     min-height: 100vh;
+//     background-color: var(--navbar-color);
+//     box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//     -webkit-box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//     -moz-box-shadow: -70px 200px 257px 89px rgba(122, 104, 104, 0.23);
+//     position: fixed;
+//     top: 0;
+//     border-radius: 0;
+//     right: 0;
+//     z-index: 400;
+//     padding: 10px;
+//     background-color: rgba(0, 0, 0, 0.9);
+
+//     .announcement-top {
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-between;
+//       gap: 20px;
+
+//       .back-icon2 {
+//         cursor: pointer;
+//         font-size: 25px;
+//         color: #fff;
+//       }
+//       h3 {
+//         text-align: center;
+//         font-weight: 500;
+//         color: #fff;
+//         //color: var(--primary-text-color);
+//       }
+
+//       .close2 {
+//         color: #fff;
+//       }
+//     }
+
+//     .content {
+//       width: 100%;
+//       margin-top: 50px;
+//       display: flex;
+//       flex-direction: column;
+//       padding-bottom: 20px;
+
+//       .title-wrapper {
+//         width: 100%;
+//         display: flex;
+//         justify-content: start;
+//         align-items: center;
+//         font-weight: 300;
+//         margin-bottom: 10px;
+
+//         .title {
+//           font-size: 16px;
+//           font-weight: 300;
+//           color: #fff;
+//           //color: var(--secondary-text-color);
+//         }
+//       }
+
+//       .announcement-wrapper {
+//         width: 100%;
+
+//         p {
+//           font-size: 14px;
+//           font-weight: 300;
+//           color: #fff;
+//           //color: var(--secondary-text-color);
+//         }
+//       }
+//     }
+//   }
+// }

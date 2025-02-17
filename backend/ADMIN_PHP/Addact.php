@@ -1,10 +1,6 @@
 <?php
-// header('Access-Control-Allow-Origin: http://blsnadmin.free.nf/');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
-
-include("./conn.php");
+include("../header.php");
+include("../conn.php");
 
 // Function para magenerate ng unique filename
 function generateUniqueFilename($file)
@@ -19,7 +15,17 @@ function generateUniqueFilename($file)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $price = $_POST['price'];
+    $pricing_details = $_POST['pricing_details'];
+    $discount = $_POST['discount'];
     $duration = $_POST['duration'];
+    $maxreservation = $_POST['maxreservation'];
+    $quantity = $_POST['quantity'];
+    $tagline = $_POST['tagline'];
+    $note = $_POST['note'];
+    $description = $_POST['description'];
+    $noteReservation = $_POST['noteReservation'];
+    $resfee = $_POST['resfee'];
+    $status = 'active';
 
     $response = ['success' => false, 'message' => ''];
 
@@ -29,12 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tempname = $_FILES['image']['tmp_name'];
         $folder = 'uploads/' . $file_name;
 
-        // Ensure the upload directory exists
-        // if (!is_dir('./uploads')) {
-        //     mkdir('./uploads', 0777, true);
-        // }
 
-        $sql = "INSERT INTO activities (name, price, duration, image) VALUES ('$name', '$price', '$duration', '$file_name')";
+        $sql = "INSERT INTO activities (name, price,pricing_details, discount, duration, maxreservation,quantity, tagline, image, description,important_notice, note, status, reservation_fee) VALUES ('$name', '$price','$pricing_details', '$discount','$duration', '$maxreservation','$quantity', '$tagline', '$file_name', '$description','$note','$noteReservation', '$status', '$resfee')";
 
         if (move_uploaded_file($tempname, $folder)) {
             if (mysqli_query($conn, $sql)) {

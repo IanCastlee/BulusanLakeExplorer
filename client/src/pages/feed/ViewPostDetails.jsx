@@ -45,7 +45,7 @@ const ViewPostDetails = () => {
                 </div>
               </div>
 
-              <div className="icon-btns">
+              {/* <div className="icon-btns">
                 <div className="icon">
                   <i className="bi bi-suit-heart"></i>
                   <p>3</p>
@@ -57,7 +57,7 @@ const ViewPostDetails = () => {
                 <div className="icon">
                   <i className="bi bi-three-dots-vertical"></i>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="caption">

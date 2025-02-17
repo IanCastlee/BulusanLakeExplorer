@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./userbooking.scss";
-
-import nodatabg from "../../../assets/paper (2).png";
-
 import Sidebar from "../../../components/sidebar/Sidebar";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import config from "../../../BaseURL";
 
 const UserBooking = ({ showSidebar2, setSidebar }) => {
@@ -15,7 +12,13 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
   const [userPendingData, setPendingData] = useState([]);
   const [totalApprovedPrice, setTotalApprovedPrice] = useState(0);
   const [showModalConfirm, setModalConfirm] = useState(false);
-  const [selectedBookingId, setSelectedBookingId] = useState(false);
+
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [selectedBookingDetails, setSelectedBookingDetails] = useState({
+    name: "",
+    booked_date: "",
+    user_id: "",
+  });
 
   // GET APPROVED BOOKING
   useEffect(() => {
@@ -59,27 +62,28 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
     }
   }, [userBookingData]);
 
-  const redirectBooking = (e) => {
-    e.preventDefault();
-    window.location.href = "/";
-  };
-
   //cancel booking
 
-  const handleCancelBooking = (booked_id) => {
+  const handleCancelBooking = () => {
+    const formdata = new FormData();
+    formdata.append("booked_id", selectedBookingId);
+    formdata.append("booked_date", selectedBookingDetails.booked_date);
+    formdata.append("name", selectedBookingDetails.name);
+    formdata.append("user_id", selectedBookingDetails.user_id);
+
     axios
-      .post(`${config.apiBaseUrl}backend/cancelBooking.php`, {
-        booked_id: booked_id,
-      })
+      .post(`${config.apiBaseUrl}backend/cancelBooking.php`, formdata)
       .then((response) => {
         if (response.data.success) {
           setBookingData((prevBooking) =>
-            prevBooking.filter((booking) => booking.booked_id !== booked_id)
+            prevBooking.filter(
+              (booking) => booking.booked_id !== selectedBookingId
+            )
           );
 
           setPendingData((prevPendingBooking) =>
             prevPendingBooking.filter(
-              (pbooking) => pbooking.booked_id !== booked_id
+              (pbooking) => pbooking.booked_id !== selectedBookingId
             )
           );
 
@@ -87,9 +91,17 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
         } else {
           console.log(response.data.error);
         }
+      })
+      .catch((error) => {
+        console.log("Error in request:", error);
       });
   };
-
+  // Trigger modal with selected booking details
+  const handleShowConfirmModal = (booked_id, name, booked_date, user_id) => {
+    setSelectedBookingId(booked_id);
+    setSelectedBookingDetails({ name, booked_date, user_id });
+    setModalConfirm(true);
+  };
   return (
     <>
       <div className="index">
@@ -125,10 +137,14 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
                         <i
                           className="bi bi-x-lg"
                           style={{ color: "red", cursor: "pointer" }}
-                          onClick={() => {
-                            setSelectedBookingId(pendingBookingData.booked_id);
-                            setModalConfirm(true);
-                          }}
+                          onClick={() =>
+                            handleShowConfirmModal(
+                              bookingData.booked_id,
+                              bookingData.name,
+                              bookingData.booked_date,
+                              bookingData.user_id
+                            )
+                          }
                         ></i>
                       </td>
                     </tr>
@@ -163,7 +179,7 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
             ""
           )}
 
-          <div className="pending">
+          <div className="pendingg">
             {userPendingData.length > 0 ? <h6>Pending</h6> : ""}
 
             {userPendingData.length > 0 ? (
@@ -205,21 +221,24 @@ const UserBooking = ({ showSidebar2, setSidebar }) => {
           {userBookingData.length === 0 && userPendingData.length === 0 && (
             <div className="no-booking">
               <span>NO BOOKING YET</span>
-              <img src={nodatabg} alt="" />
-              {/* <button onClick={redirectBooking}>Book Now</button> */}
+              <i className="bi bi-card-checklist"></i>
+
+              <Link className="btn-book" to="/">
+                Book Now
+              </Link>
             </div>
           )}
         </div>
       </div>
 
-      {showModalConfirm && selectedBookingId && (
+      {showModalConfirm && (
         <div className="cofirm-cancel-booking">
           <p className="top">Are you sure you wan't to cancel this booking?</p>
 
           <div className="bot">
             <button
               className="btn-cancel-booking"
-              onClick={() => handleCancelBooking(selectedBookingId)}
+              onClick={handleCancelBooking}
             >
               Cancel Booking
             </button>

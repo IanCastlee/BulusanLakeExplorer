@@ -5,7 +5,7 @@ include("./conn.php");
 
 $oid = isset($_GET['id']) ? $_GET['id'] : '';
 
-if ($stmt = $conn->prepare("SELECT * FROM activities WHERE act_id != ?")) {
+if ($stmt = $conn->prepare("SELECT * FROM activities WHERE act_id != ? AND status = 'active'")) {
     $stmt->bind_param("i", $oid);
     $stmt->execute();
     $result = $stmt->get_result();

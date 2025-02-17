@@ -1,9 +1,7 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: *');
-header('Content-Type: application/json');
+include("../header.php");
+include("../conn.php");
 
-include("./conn.php");
 
 $data = json_decode(file_get_contents("php://input"), true);
 

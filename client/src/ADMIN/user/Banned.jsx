@@ -12,7 +12,7 @@ const Banned = () => {
 
   useEffect(() => {
     axios
-      .get(`${config.apiBaseUrl}backend/ADMIN_PHP/getActiveUsers.php`)
+      .get(`${config.apiBaseUrl}backend/ADMIN_PHP/getNotActiveUsers.php`)
       .then((response) => {
         setUserData(response.data);
       })
@@ -44,15 +44,32 @@ const Banned = () => {
   );
 
   const totalPages = Math.ceil(userdata.length / rowsPerPage);
+
+  //handleRemoveUser
+  const handleRecoverUser = (user_id) => {
+    axios
+      .post(`${config.apiBaseUrl}backend/ADMIN_PHP/updateUserStatusA.php`, {
+        user_id: user_id,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          setUserData((prevUsers) =>
+            prevUsers.filter((user) => user.user_id !== user_id)
+          );
+        } else {
+          console.log(response.data.error);
+        }
+      });
+  };
   return (
     <>
-      <div className="user-active">
+      <div className="banned">
         <Sideba />
         <div className="user-content">
           <div className="top">
             <div className="left">
-              <h6>User Bin</h6>
-              <Link className="opp" to="/admin/active-user/">
+              <h6>Not Active</h6>
+              <Link className="opp" to={`/admin/active-user/${0}`}>
                 <i className="bi bi-arrow-left-right"></i>
               </Link>
             </div>
@@ -90,8 +107,15 @@ const Banned = () => {
                         <td>{data.fullname}</td>
                         <td>{data.email}</td>
                         <td>{data.address}</td>
+
                         <td>
-                          <button className="btn-ban">Ban</button>
+                          <button
+                            className="btn-update"
+                            style={{ backgroundColor: "blue" }}
+                            onClick={() => handleRecoverUser(data.user_id)}
+                          >
+                            Recover
+                          </button>
                         </td>
                       </tr>
                     ))}

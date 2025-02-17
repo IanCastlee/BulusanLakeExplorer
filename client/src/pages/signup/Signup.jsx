@@ -2,22 +2,38 @@ import React, { useState } from "react";
 import "./signup.scss";
 import axios from "axios";
 import Signin from "../signin/Signin";
-import { useEffect } from "react";
 import config from "../../BaseURL";
 
 const Signup = ({ closeModal }) => {
   const [isloadingUp, setLoaderUp] = useState(false);
   const [messageUp, setMessageUp] = useState("");
+  const [messageErr, setMessageErr] = useState("");
+
+  const [openCP, setOpenCP] = useState(0);
+  const [invalidPasswordMessage, setInvalidPasswordMessage] = useState("");
 
   const [showSignIn, setSignIn] = useState(false);
   const [showSignUp, setSignUp] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+
   const toggleSignIn = () => {
     setSignIn(true);
     setSignUp(false);
   };
+
+  const toggleSignUpShowCP = () => {
+    setSignIn(false);
+    setSignUp(true);
+    setOpenCP(1);
+  };
+
   const toggleSignUp = () => {
     setSignIn(false);
     setSignUp(true);
+  };
+
+  const toggleHideSigin = () => {
+    setSignIn(false);
   };
 
   // signup
@@ -43,6 +59,9 @@ const Signup = ({ closeModal }) => {
   const handleSignUpChange = (e) => {
     const { name, value } = e.target;
 
+    setMessageErr("");
+    setMessageUp("");
+    setInvalidPasswordMessage("");
     setErrorMessages((prevErrors) => ({
       ...prevErrors,
       [name]: " ",
@@ -53,11 +72,6 @@ const Signup = ({ closeModal }) => {
       [name]: value,
     }));
   };
-
-  //reset  button label if theres have a changes in input
-  useEffect(() => {
-    setMessageUp("Sign Up");
-  }, [signUpData]);
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -80,9 +94,31 @@ const Signup = ({ closeModal }) => {
       return;
     }
 
+    // Gmail validation
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!gmailRegex.test(signUpData.email)) {
+      setErrorMessages((prevErrors) => ({
+        ...prevErrors,
+        email: "Please enter a valid Gmail address.",
+      }));
+      setLoaderUp(false);
+      return;
+    }
+
     if (signUpData.password !== signUpData.confirmPassword) {
       setMessageUp("Passwords and confirm password not matched!");
       setLoaderUp(false);
+      return;
+    }
+
+    const passwordCriteria = /^(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+
+    if (!passwordCriteria.test(signUpData.password)) {
+      setInvalidPasswordMessage(
+        "Password must be at least 8 characters long and include a capital letter and a number."
+      );
+      setLoaderUp(false);
+
       return;
     }
 
@@ -101,10 +137,13 @@ const Signup = ({ closeModal }) => {
       );
 
       if (response.data.success) {
-        setMessageUp("Registration successful!");
-        setLoaderUp(false);
-      } else {
         setMessageUp(response.data.message);
+        setLoaderUp(false);
+        setMessageErr(response.data.messageErr);
+        toggleSignUpShowCP();
+        // setUsedEmail(response.data.email);
+      } else {
+        setMessageErr(response.data.messageErr);
         setLoaderUp(false);
       }
     } catch (error) {
@@ -112,6 +151,10 @@ const Signup = ({ closeModal }) => {
     }
   };
 
+  // Toggle showPassword state when checkbox is checked
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   return (
     <>
       <div className="signup">
@@ -121,12 +164,22 @@ const Signup = ({ closeModal }) => {
 
         {/* singup */}
         {showSignUp && (
-          <Signin toggleSignIn={toggleSignIn} closeModal={closeModal} />
+          <Signin
+            toggleSignIn={toggleSignIn}
+            toggleHideSigin={toggleHideSigin}
+            closeModal={closeModal}
+            toggleSignUp={toggleSignUp}
+            openCP={openCP}
+            usedEmail={signUpData.email}
+            usedPassword={signUpData.password}
+          />
         )}
 
         {/* signin */}
         {showSignIn && (
           <div className="signup-wrapper">
+            <span className="loader"></span>
+
             <div className="top">
               <h6>Log your account</h6>|
               <span onClick={toggleSignUp}>Sign In</span>
@@ -165,8 +218,11 @@ const Signup = ({ closeModal }) => {
                 onChange={handleSignUpChange}
               />
               <span className="err">{errorMessages.password}</span>
+              {invalidPasswordMessage && (
+                <span className="err">{invalidPasswordMessage}</span>
+              )}
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
                 value={signUpData.password}
@@ -174,19 +230,34 @@ const Signup = ({ closeModal }) => {
               />
               <span className="err">{errorMessages.confirmPassword}</span>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="confirmPassword"
                 placeholder="Confirm password"
                 value={signUpData.confirmPassword}
                 onChange={handleSignUpChange}
               />
+              <div className="showpass">
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={togglePasswordVisibility}
+                />
+                <span onClick={togglePasswordVisibility}>Show password</span>
+              </div>
               <button type="submit" disabled={isloadingUp}>
-                {isloadingUp ? (
-                  <div className="loader"></div>
-                ) : (
-                  messageUp || "Sign Up"
-                )}
+                {isloadingUp ? <span className="loader"></span> : "Sign Up"}
               </button>
+
+              {messageUp && (
+                <p style={{ color: "red" }} className="message">
+                  {messageUp}
+                </p>
+              )}
+              {messageErr && (
+                <p style={{ color: "red" }} className="messageErr">
+                  {messageErr}
+                </p>
+              )}
             </form>
           </div>
         )}

@@ -1,7 +1,6 @@
 // src/config.js
 const config = {
-  apiBaseUrl: "http://localhost/sheep/",
-  //apiBaseUrl: "/",
+  //apiBaseUrl: "http://localhost/BULUSANLAKE_EXPLORER/",
+  apiBaseUrl: "/",
 };
-
 export default config;

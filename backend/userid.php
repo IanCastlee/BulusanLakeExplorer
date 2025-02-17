@@ -4,7 +4,7 @@ include("./header.php");
 include("./conn.php");
 
 session_start();
-$userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : 0;
+$userid = isset($_SESSION['userid']) ? $_SESSION['userid'] : null;
 
 if ($stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?")) {
     $stmt->bind_param('i', $userid);
@@ -16,6 +16,7 @@ if ($stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?")) {
         echo json_encode([
             'userInfo' => $userInfo,
             'userid' => $userid
+
         ]);
     } else {
         echo json_encode(["error" => "User not found"]);

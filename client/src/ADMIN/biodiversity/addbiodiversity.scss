@@ -4,12 +4,13 @@
   left: 0;
   right: 0;
   top: 30px;
-  background-color: #242526;
+  background-color: #fff;
   border-radius: 5px;
   z-index: 112;
-  height: auto;
+  height: 90%;
   margin: auto;
   padding: 20px;
+  overflow-y: auto;
   .act-top {
     display: flex;
     justify-content: space-between;
@@ -17,9 +18,9 @@
     margin-bottom: 20px;
 
     h6 {
-      font-size: 25px;
+      font-size: 18px;
       font-weight: 700;
-      color: #b0b3b8;
+      color: #434242;
     }
 
     i {
@@ -38,25 +39,110 @@
       gap: 8px;
       display: flex;
       flex-direction: column;
+      width: 100%;
+      .drop-down {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
 
+        label {
+          margin-bottom: 0.5rem;
+        }
+
+        .combo-box {
+          padding: 0.5rem;
+          color: #434242;
+          font-size: 1rem;
+          border: 1px solid rgb(212, 206, 206);
+          border-radius: 5px;
+          appearance: none;
+          background: #f8eded
+            url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#ccc" d="M2 0L0 2h4zM2 5L0 3h4z"/></svg>')
+            no-repeat right 0.75rem center;
+          background-size: 0.65rem auto;
+        }
+
+        .combo-box:focus {
+          outline: none;
+          border: 1px solid rgb(212, 206, 206);
+        }
+        span {
+          color: #b0b3b8;
+          margin: 2px 0;
+          font-size: 12px;
+          width: 100%;
+          text-align: center;
+        }
+        .add-new-type-w {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          input {
+            height: 30px;
+            background-color: #f8eded;
+            color: #434242;
+            border: 1px solid rgb(212, 206, 206);
+            font-size: 16px;
+            padding-left: 15px;
+            border-radius: 5px;
+          }
+
+          button {
+            height: 25px;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+            font-size: 10px;
+          }
+        }
+      }
+
+      textarea {
+        height: 70px;
+        background-color: #f8eded;
+        color: #434242;
+        border: 1px solid rgb(212, 206, 206);
+        font-size: 16px;
+        padding-left: 15px;
+        padding-top: 10px;
+        border-radius: 5px;
+      }
       input {
         height: 40px;
-        background-color: #434242;
-        color: #b0b3b8;
-        border: none;
+        background-color: #f8eded;
+        color: #434242;
+        border: 1px solid rgb(212, 206, 206);
         font-size: 16px;
         padding-left: 15px;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
       }
       input::placeholder {
-        font-size: 14px;
-        color: #b0b3b8;
-      }
-      input:focus {
-        outline: none;
+        font-size: 12px;
+        color: #434242;
       }
 
+      input:focus {
+        outline: none;
+        border: 1px solid rgb(212, 206, 206);
+      }
+      textarea:focus {
+        outline: none;
+        border: 1px solid rgb(212, 206, 206);
+      }
+      textarea::placeholder {
+        color: #434242;
+        font-size: 12px;
+      }
+      label {
+        font-size: 14px;
+        color: #434242;
+        cursor: pointer;
+        gap: 3px;
+        padding: 5px 0;
+        i {
+          color: green;
+        }
+      }
       button {
         background-color: green;
         color: #fff;
@@ -68,23 +154,12 @@
         border-radius: 5px;
       }
       button:hover {
-        color: #b0b3b8;
-      }
-
-      label {
-        font-size: 14px;
-        color: #fff;
-        cursor: pointer;
-        gap: 3px;
-        padding: 5px 0;
-        i {
-          color: green;
-        }
+        color: #434242;
       }
     }
     .act-img {
-      height: 210px;
-      width: 300px;
+      max-height: 300px;
+      width: 40%;
 
       img {
         width: 100%;
@@ -104,4 +179,191 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 789px) {
+  .add-act {
+    position: fixed;
+    width: 900px;
+    left: 0;
+    right: 0;
+    top: 60px;
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 112;
+    height: 100vh;
+    margin: auto;
+    padding: 20px;
+    width: 100%;
+    overflow-y: auto;
+    .act-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h6 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #434242;
+      }
+
+      i {
+        font-size: 20px;
+        color: #434242;
+        cursor: pointer;
+      }
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      .inputs {
+        gap: 8px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .drop-down {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 1rem;
+
+          label {
+            margin-bottom: 0.5rem;
+          }
+
+          .combo-box {
+            padding: 0.5rem;
+            color: #434242;
+            font-size: 1rem;
+            border: 1px solid rgb(212, 206, 206);
+            border-radius: 5px;
+            appearance: none;
+            background: #f8eded
+              url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#ccc" d="M2 0L0 2h4zM2 5L0 3h4z"/></svg>')
+              no-repeat right 0.75rem center;
+            background-size: 0.65rem auto;
+          }
+
+          .combo-box:focus {
+            outline: none;
+            border: 1px solid rgb(212, 206, 206);
+          }
+          span {
+            color: #b0b3b8;
+            margin: 2px 0;
+            font-size: 12px;
+            width: 100%;
+            text-align: center;
+          }
+          .add-new-type-w {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            input {
+              height: 30px;
+              background-color: #f8eded;
+              color: #434242;
+              border: 1px solid rgb(212, 206, 206);
+              font-size: 16px;
+              padding-left: 15px;
+              border-radius: 5px;
+            }
+
+            button {
+              height: 25px;
+              border-bottom-right-radius: 5px;
+              border-top-right-radius: 5px;
+              font-size: 10px;
+            }
+          }
+        }
+
+        textarea {
+          height: 70px;
+          background-color: #f8eded;
+          color: #434242;
+          border: 1px solid rgb(212, 206, 206);
+          font-size: 16px;
+          padding-left: 15px;
+          padding-top: 10px;
+          border-radius: 5px;
+        }
+        input {
+          height: 40px;
+          background-color: #f8eded;
+          color: #434242;
+          border: 1px solid rgb(212, 206, 206);
+          font-size: 16px;
+          padding-left: 15px;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+        input::placeholder {
+          font-size: 12px;
+          color: #434242;
+        }
+
+        input:focus {
+          outline: none;
+          border: 1px solid rgb(212, 206, 206);
+        }
+        textarea:focus {
+          outline: none;
+          border: 1px solid rgb(212, 206, 206);
+        }
+        textarea::placeholder {
+          color: #434242;
+          font-size: 12px;
+        }
+        label {
+          font-size: 14px;
+          color: #434242;
+          cursor: pointer;
+          gap: 3px;
+          padding: 5px 0;
+          i {
+            color: green;
+          }
+        }
+        button {
+          background-color: green;
+          color: #fff;
+          font-size: 16px;
+          font-weight: 700;
+          cursor: pointer;
+          border: none;
+          padding: 7px;
+          border-radius: 5px;
+          margin-bottom: 50px;
+        }
+        button:hover {
+          color: #434242;
+        }
+      }
+      .act-img {
+        max-height: 300px;
+        width: 40%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+
+  .overlay-addact {
+    z-index: 111;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }

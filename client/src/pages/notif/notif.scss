@@ -11,9 +11,8 @@
 
 .wrappern {
   background-color: var(--background-soft);
-
   display: flex;
-  max-width: fit-content;
+  width: 500px;
   height: 100%;
   padding: 20px 15px 3px 15px;
   background-color: var();
@@ -34,7 +33,52 @@
     }
   }
 
+  //loader
+  .loader {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    animation: rotate 1s linear infinite;
+    align-self: center;
+  }
+  .loader::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 2px solid #2abd1c;
+    animation: prixClipFix 2s linear infinite;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes prixClipFix {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+    }
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+    }
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+    }
+    75% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+    }
+    100% {
+      clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
+  }
+  //loader end
+
   .card {
+    width: 100%;
     display: flex;
     gap: 5px;
     background-color: var(--button-color);
@@ -43,15 +87,36 @@
     flex-direction: column;
     align-items: start;
     color: var(--secondary-text-color);
+    margin-bottom: 3px;
 
     &.clicked {
-      background-color: var(--rightbgc);
-      color: var(--primary-text-color);
+      background-color: var(--main-bgc);
     }
 
-    span {
-      color: var(--secondary-text-color);
-      font-size: 10px;
+    .top {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: start;
+      i {
+        font-size: 25px;
+        color: blue;
+      }
+
+      .title-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          color: var(--primary-text-color);
+          font-size: 10px;
+        }
+
+        p {
+          font-size: 8px;
+          color: var(--secondary-text-color);
+        }
+      }
     }
 
     .rightn {
@@ -67,6 +132,12 @@
 
       .msg {
         font-size: 14px;
+        font-weight: 300;
+        color: var(--primary-text-color);
+
+        &.clicked {
+          color: var(--secondary-text-color);
+        }
       }
     }
 
@@ -75,23 +146,64 @@
       display: flex;
       justify-content: end;
       align-items: center;
-      a {
+      .span {
         font-size: 10px;
         font-weight: 500;
-        color: blue;
+        color: var(--secondary-text-color);
         cursor: pointer;
       }
     }
   }
-  .show-more-btn {
-    background-color: transparent;
-    color: var(--secondary-text-color);
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
+}
+
+.viewImageModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  background-color: var(--background-soft);
+  width: 500px;
+  height: auto;
+  border-radius: 5px;
+  z-index: 999;
+
+  .top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      color: var(--primary-text-color);
+      font-size: 12px;
+    }
+
+    i {
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--primary-text-color);
+    }
+  }
+
+  .content {
+    width: 100%;
+    margin-top: 30px;
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
+.viewImageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 @media (max-width: 789px) {
   .notif {
     height: calc(100vh - 65px);
@@ -112,26 +224,96 @@
       .titlen {
         h6 {
           font-size: 18px;
+          font-weight: 500;
+        }
+        padding-left: 10px;
+      }
+
+      //loader
+      .loader {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        position: relative;
+        animation: rotate 1s linear infinite;
+        align-self: center;
+      }
+      .loader::before {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0px;
+        border-radius: 50%;
+        border: 2px solid #2abd1c;
+        animation: prixClipFix 2s linear infinite;
+      }
+
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
         }
       }
 
+      @keyframes prixClipFix {
+        0% {
+          clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+        }
+        25% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+        }
+        50% {
+          clip-path: polygon(
+            50% 50%,
+            0 0,
+            100% 0,
+            100% 100%,
+            100% 100%,
+            100% 100%
+          );
+        }
+        75% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+        }
+        100% {
+          clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+        }
+      }
+      //loader end
       .card {
         width: 100%;
         border-radius: 0;
+
+        &.clicked {
+          background-color: var(--background-soft);
+        }
+
+        .top {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          justify-content: start;
+          i {
+            font-size: 20px;
+            color: blue;
+          }
+        }
+
         .rightn {
           width: 100%;
           display: flex;
           justify-content: start;
           align-items: center;
           gap: 5px;
-          i {
-            font-size: 25px;
-            color: green;
-          }
+          padding: 0 10px;
 
           .msg {
             font-size: 14px;
             font-weight: 300;
+            color: var(--primary-text-color);
+
+            &.clicked {
+              color: var(--secondary-text-color);
+            }
           }
         }
 
@@ -157,5 +339,54 @@
         border: none;
       }
     }
+  }
+
+  .viewImageModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: var(--background-soft);
+    width: 95%;
+    height: auto;
+    border-radius: 5px;
+    z-index: 999;
+    padding: 7px;
+
+    .top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        color: var(--primary-text-color);
+        font-size: 12px;
+      }
+
+      i {
+        cursor: pointer;
+        font-size: 20px;
+        color: var(--primary-text-color);
+      }
+    }
+
+    .content {
+      width: 100%;
+      margin-top: 30px;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+  .viewImageModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
