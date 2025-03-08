@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import config from "../../BaseURL";
 import axios from "axios";
 import { SidebarContext } from "../../context/Sidebarcontext";
-
+import { motion } from "framer-motion";
 const Notif = () => {
   const { userid, getUnclickedNotif } = useContext(SidebarContext);
   const [notif, setNotif] = useState([]);
@@ -78,7 +78,10 @@ const Notif = () => {
               <span className="loader"></span>
             ) : notif.length > 0 ? (
               notif.map((n) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                   className={`card ${n.status === "clicked" ? "clicked" : ""}`}
                   key={n.notif_id}
                   onClick={() => handleClickedNotif(n.notif_id)}
@@ -145,7 +148,7 @@ const Notif = () => {
                       </span>
                     )}
                   </div>
-                </div>
+                </motion.div>
               ))
             ) : (
               <div

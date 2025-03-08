@@ -51,15 +51,15 @@ const Biodetail = () => {
                 </div>
 
                 <div className="rightb">
-                  <h6>{detail.name}</h6>
+                  <h3>{detail.name}</h3>
                   <div className="d-wrapper">
-                    <span style={{ fontSize: "12px" }}>Scientific name :</span>
-                    <p style={{ fontSize: "12px" }}>{detail.sname}</p>
+                    <span>Scientific name :</span>
+                    <h4>{detail.sname}</h4>
                   </div>
 
                   <div className="d-wrapper">
-                    <span style={{ fontSize: "12px" }}>Type :</span>
-                    <p style={{ fontSize: "12px" }}>{detail.type}</p>
+                    <span>Type :</span>
+                    <h4>{detail.type}</h4>
                   </div>
 
                   {/* <div className="d-wrapper">

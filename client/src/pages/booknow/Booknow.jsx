@@ -378,11 +378,11 @@ const Booknow = () => {
     const formData = new FormData();
     formData.append("participant", participant);
     formData.append("dateBook", formatDate(dateBook));
-    formData.append("timeBooked", JSON.stringify(selectedTime)); // Convert array to JSON string
+    formData.append("timeBooked", JSON.stringify(selectedTime));
     formData.append("totalPrice", totalPrice);
     formData.append("actId", actData.act_id);
-    formData.append("userId", userid); // Ensure casing matches PHP's `userID`
-    formData.append("participantCount", JSON.stringify(bookedCount)); // Convert array to JSON string
+    formData.append("userId", userid);
+    formData.append("participantCount", JSON.stringify(bookedCount));
     formData.append("resfee", ResfeePaymentServer);
     formData.append("name", actData.name);
 

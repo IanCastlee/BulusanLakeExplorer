@@ -1,15 +1,15 @@
 import "./userprofile.scss";
+import { motion } from "framer-motion";
 import cp from "../../../assets/bg.jpg";
 import pp from "../../../assets/user (8).png";
 
-import { Link, useNavigate, useParams } from "react-router-dom"; // Import useHistory
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import config from "../../../BaseURL";
 import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../../../context/Sidebarcontext";
 import { CommentCountContext } from "../../../context/CommentCountProvider ";
 import Commentt from "../../../components/comment/Commentt";
-import { Upload } from "../../../components/upload/Upload";
 
 const Userprofile = () => {
   const { id } = useParams();
@@ -73,7 +73,7 @@ const Userprofile = () => {
   const toggleExpand = (postId) => {
     setExpandedCaptions((prevState) => ({
       ...prevState,
-      [postId]: !prevState[postId], // Toggle the specific post's expanded state
+      [postId]: !prevState[postId],
     }));
   };
 
@@ -499,8 +499,8 @@ const Userprofile = () => {
       .get(
         `${config.apiBaseUrl}backend/getUserPosts.php`, // Base URL
         {
-          params: { userid: id }, // Pass the id as a query parameter
-          withCredentials: true, // Include credentials if needed
+          params: { userid: id },
+          withCredentials: true,
         }
       )
       .then((response) => {
@@ -595,7 +595,6 @@ const Userprofile = () => {
         if (response.data.userInfo && response.data.userid) {
           setUserInfo(response.data.userInfo);
           //   setUserId(response.data.userid);
-          console.log("+++++", response.data.userInfo);
         } else {
           console.error("Statud : User not signed in");
         }
@@ -608,9 +607,6 @@ const Userprofile = () => {
   useEffect(() => {
     fetchUserData();
   }, [id]);
-
-  console.log("User ID 1", id);
-  console.log("User ID 2", userInfo.user_id);
 
   return (
     <>
@@ -745,34 +741,9 @@ const Userprofile = () => {
 
           {showPost && (
             <div className="wrapper-post">
-              {/* {data &&
-                data.map((d) => (
-                  <Link
-                    to={`/user-viewpost/${d.image_id}/${id}`}
-                    className="card"
-                    key={d.image_id}
-                  >
-                    <img
-                      className="user-post"
-                      src={`${config.apiBaseUrl}backend/uploads/${d.image_path}`}
-                      alt=""
-                    />
-                  </Link>
-                ))} */}
-
               <>
                 <div className="feedd">
                   <div className="left">
-                    {/* {id && userid == id && (
-                      <div className="upload" onClick={handleClickUpload}>
-                        <i className="bi bi-file-earmark-image-fill"></i>
-                        <input
-                          type="text"
-                          placeholder="Share your captured"
-                          readOnly
-                        />
-                      </div>
-                    )} */}
                     {loading ? (
                       <>
                         <div className="placeholder-wrapper">
@@ -839,7 +810,13 @@ const Userprofile = () => {
                         const additionalCount = imageCount - 5;
 
                         return (
-                          <div key={post.post_id} className="wrapper">
+                          <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            key={post.post_id}
+                            className="wrapper"
+                          >
                             <Link
                               to={`/view-post/${post.post_id}`}
                               className={`post-img-wrapper ${getImageClass(
@@ -1010,7 +987,7 @@ const Userprofile = () => {
                                 )}
                               </div>
                             </div>
-                          </div>
+                          </motion.div>
                         );
                       })
                     ) : (

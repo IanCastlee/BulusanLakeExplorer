@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./mybooking.scss";
+import { motion } from "framer-motion";
 import axios from "axios";
 import config from "../../../BaseURL";
 import { Link, useParams } from "react-router-dom";
@@ -287,6 +288,8 @@ const Mybooking = () => {
       });
   };
 
+  const year = new Date().getFullYear();
+
   return (
     <>
       <div className="mybooking">
@@ -331,7 +334,10 @@ const Mybooking = () => {
                     <span className="loader">Please wait...</span>
                   ) : userBookingData.length > 0 ? (
                     userBookingData.map((booked) => (
-                      <div
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                         style={{ borderRadius: "0" }}
                         className="card"
                         key={booked.booked_id}
@@ -438,7 +444,7 @@ const Mybooking = () => {
                             </button> */}
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     ))
                   ) : (
                     <p>
@@ -463,7 +469,10 @@ const Mybooking = () => {
                     <span className="loader">Please wait...</span>
                   ) : userPendingData.length > 0 ? (
                     userPendingData.map((booked) => (
-                      <div
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                         style={{ borderRadius: "0" }}
                         className="card"
                         key={booked.booked_id}
@@ -506,7 +515,7 @@ const Mybooking = () => {
                             Cancel
                           </button>
                         </div>
-                      </div>
+                      </motion.div>
                     ))
                   ) : (
                     <p>
@@ -532,7 +541,10 @@ const Mybooking = () => {
                     <span className="loader">Please wait...</span>
                   ) : userPreviousData.length > 0 ? (
                     userPreviousData.map((booked) => (
-                      <div
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                         style={{ borderRadius: "0" }}
                         className="card"
                         key={booked.booked_id}
@@ -571,7 +583,7 @@ const Mybooking = () => {
                             Cancel
                           </button> */}
                         </div>
-                      </div>
+                      </motion.div>
                     ))
                   ) : (
                     <p>
@@ -634,8 +646,8 @@ const Mybooking = () => {
             </div>
             <div className="bot">
               <span>
-                © 2024 Bulusan Lake Explorer. All rights reserved. Developed by
-                SalTech
+                © {year} Bulusan Lake Explorer. All rights reserved. Developed
+                by Ian Castillo
               </span>
             </div>
           </div>

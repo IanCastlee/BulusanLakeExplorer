@@ -11,7 +11,7 @@ const Biosearch = () => {
     characteristic: "",
   });
   const [results, setResults] = useState([]);
-  const [hasSearched, setHasSearched] = useState(false); // New state to track if a search has been performed
+  const [hasSearched, setHasSearched] = useState(false);
 
   const [showInfoModal, setShowInfoModal] = useState(false);
 
@@ -34,7 +34,7 @@ const Biosearch = () => {
 
     // Check if both search fields are empty
     if (!trimmedQuery.type && !trimmedQuery.characteristic) {
-      setResults([]); // Set results to empty array if fields are empty
+      setResults([]);
       return;
     }
 
@@ -47,7 +47,7 @@ const Biosearch = () => {
         }
       );
       setResults(response.data);
-      setHasSearched(true); // Mark that a search has been performed
+      setHasSearched(true);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -91,6 +91,7 @@ const Biosearch = () => {
               onChange={handleSearchChange}
             />
             <i className="bi bi-search" onClick={handleSearchSubmit}></i>
+            <button onClick={handleSearchSubmit}>Search</button>
           </div>
 
           <div className="result">

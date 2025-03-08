@@ -1,6 +1,6 @@
 import "./actinfo.scss";
 import axios from "axios";
-
+import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 
 import pp from "../../assets/user (8).png";
@@ -291,8 +291,19 @@ const Actinfo = () => {
                       </div>
                     </div>{" "}
                     <div className="info2">
-                      <h6>{activity.name}</h6>
-                      <span style={{ display: "flex" }}>
+                      <motion.h6
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {activity.name}
+                      </motion.h6>
+                      <motion.span
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        style={{ display: "flex" }}
+                      >
                         <i
                           className="bi bi-tag"
                           tyle={{ marginRight: "5px" }}
@@ -313,40 +324,57 @@ const Actinfo = () => {
                             ? "(max of 6 person)"
                             : ""}
                         </p>
-                      </span>
+                      </motion.span>
 
-                      <p>
+                      <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
                         <i
                           className="bi bi-alarm"
                           style={{ marginRight: "5px" }}
                         ></i>
                         <span>Ride Duration</span> - {activity.duration} minutes
                         {/* per ride */}
-                      </p>
+                      </motion.p>
                       {activity.discount > 0 && (
-                        <p className="discount">
+                        <motion.p
+                          initial={{ opacity: 0, y: 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className="discount"
+                        >
                           <i
                             className="bi bi-bookmark-dash"
                             style={{ marginRight: "5px" }}
                           ></i>
                           {activity.discount}% discount per ride
-                        </p>
+                        </motion.p>
                       )}
 
-                      <span className="price-details-wrapper">
+                      <motion.span
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="price-details-wrapper"
+                      >
                         <span className="price-det">
                           Pricing and Reservation Fee
                         </span>
                         <p>{activity.pricing_details}</p>
-                      </span>
+                      </motion.span>
                     </div>
                     {userid === 0 ? (
-                      <button
+                      <motion.button
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
                         className="btn-book"
                         onClick={() => setInput(true)}
                       >
                         Reserve now{" "}
-                      </button>
+                      </motion.button>
                     ) : (
                       <Link
                         className="btn-book"
@@ -358,7 +386,12 @@ const Actinfo = () => {
                   </div>
                 </div>
 
-                <div className="rating-wrapper">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="rating-wrapper"
+                >
                   <div
                     className="rating"
                     onClick={() => setnotefeedbackModal(true)}
@@ -375,19 +408,28 @@ const Actinfo = () => {
                       <span> {averageRating} / 5.0</span>
                     )}
                   </div>
-                </div>
+                </motion.div>
 
                 <div className="note">
-                  <p>
+                  <motion.p
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <strong className="ttl">Important notice </strong>{" "}
                     {activity.important_notice}
-                  </p>
+                  </motion.p>
                 </div>
 
-                <p className={`about ${isExpanded ? "expand" : ""}`}>
+                <motion.p
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className={`about ${isExpanded ? "expand" : ""}`}
+                >
                   <strong className="ttl">Description </strong>{" "}
                   {activity.description}{" "}
-                </p>
+                </motion.p>
                 <strong onClick={() => setIsExpanded(!isExpanded)}>
                   {isExpanded ? "Read less" : "Read more"}
                 </strong>
@@ -398,10 +440,21 @@ const Actinfo = () => {
           )}
 
           <div className="other-act-title">
-            <span>Other Activities</span>
+            <motion.span
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Other Activities
+            </motion.span>
           </div>
           <div className="other-act">
-            <div className="other-act-wrapper">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="other-act-wrapper"
+            >
               {loading ? (
                 <span className="loader"></span>
               ) : (
@@ -418,12 +471,17 @@ const Actinfo = () => {
                   </div>
                 ))
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
 
         <div className="feedback">
-          <div className="top">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="top"
+          >
             <div className="left">
               <div className="name-count">
                 <span className="a-name">{activity && activity.name}</span>
@@ -449,7 +507,7 @@ const Actinfo = () => {
             </div>
 
             <button onClick={handleIfUsersignedIn}>Add feedback</button>
-          </div>
+          </motion.div>
 
           <div className="reviews">
             <div ref={chatEndRef}></div>
@@ -508,7 +566,13 @@ const Actinfo = () => {
             ) : (
               reviews &&
               reviews.map((review) => (
-                <div className="card" key={review.review_id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="card"
+                  key={review.review_id}
+                >
                   <div className="pp-name-review">
                     <img
                       src={
@@ -573,30 +637,10 @@ const Actinfo = () => {
                       <p>{review.review}</p>
                     </div>
                   </div>
-                  {/* HEREEEE */}
-                </div>
+                </motion.div>
               ))
             )}
           </div>
-
-          {/* <div className="input-wrapper">
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            {showAddReview && (
-              <div className="input">
-                <textarea
-                  name=""
-                  placeholder="Add feedback"
-                  value={reviewData}
-                  onChange={handleReviewChange}
-                ></textarea>
-                <i
-                  className="bi bi-file-arrow-up-fill"
-                  onClick={handleSubmitReview}
-                ></i>
-              </div>
-            )}
-          </div> */}
         </div>
 
         <p className={`message ${showInput ? "show" : ""}`} ref={messageS}>

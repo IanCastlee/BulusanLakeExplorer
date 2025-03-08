@@ -1,0 +1,32 @@
+.landing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 2000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .landing-conatainer {
+    display: flex;
+    flex-direction: column;
+
+    img {
+      height: 8.125rem;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 20px;
+
+    span {
+      font-size: 14px;
+      color: #000;
+    }
+  }
+}

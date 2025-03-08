@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+
 import "./index.scss";
 import bgimage from "../../assets/bg.jpg";
-import map from "../../assets/lakemap2.jpg";
+// import map from "../../assets/lakemap2.jpg";
+import map from "../../assets/Untitled design (8).png";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { Link } from "react-router-dom";
 import config from "../../BaseURL";
@@ -11,7 +14,6 @@ import { SidebarContext } from "../../context/Sidebarcontext";
 import canteen from "../../assets/gps.png";
 import image1 from "../../assets/gps.png";
 import image2 from "../../assets/gps.png";
-import lsIcon from "../../assets/screen (2).png";
 import annoucnemnticon from "../../assets/megaphone.png";
 import virticon from "../../assets/virtual-tour (1).png";
 
@@ -122,8 +124,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
 
       setTimeout(() => {
         setshowModalLandScapeMsg(false);
-      }, 7000); // Hide after 7 seconds
-    }, 5000); // Show after 5 seconds
+      }, 7000);
+    }, 5000);
   };
 
   const closePanorama2 = () => {
@@ -142,8 +144,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
 
       setTimeout(() => {
         setshowModalLandScapeMsg(false);
-      }, 7000); // Hide after 7 seconds
-    }, 5000); // Show after 5 seconds
+      }, 7000);
+    }, 5000);
   };
 
   const closePanorama3 = () => {
@@ -162,8 +164,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
 
       setTimeout(() => {
         setshowModalLandScapeMsg(false);
-      }, 7000); // Hide after 7 seconds
-    }, 5000); // Show after 5 seconds
+      }, 7000);
+    }, 5000);
   };
 
   const closePanorama4 = () => {
@@ -182,8 +184,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
 
       setTimeout(() => {
         setshowModalLandScapeMsg(false);
-      }, 7000); // Hide after 7 seconds
-    }, 5000); // Show after 5 seconds
+      }, 7000);
+    }, 5000);
   };
 
   const closePanorama5 = () => {
@@ -229,6 +231,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
     }
   };
 
+  const year = new Date().getFullYear();
+
   return (
     <>
       <div className="index-main">
@@ -267,14 +271,25 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
               <div className="banner-wrapper">
                 {activities && activities[currentSlide] && (
                   <>
-                    <p>{activities[currentSlide].tagline}</p>
+                    <motion.h1
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      {activities[currentSlide].tagline}
+                    </motion.h1>
 
                     {activities[currentSlide].discount > 0 && (
-                      <span className="discount">
+                      <motion.span
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="discount"
+                      >
                         Use our app to reserve a {activities[currentSlide].name}{" "}
                         and get {activities[currentSlide].discount}% discount
                         today
-                      </span>
+                      </motion.span>
                     )}
                     <Link
                       className="btn-booknow"
@@ -282,11 +297,19 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
                     >
                       Reserve Now
                     </Link>
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="open-wrapper"
+                    >
+                      <p>Open Monday to Sunday </p>
+                      <span>(7:00 AM to 5:00 PM)</span>
+                    </motion.div>
                   </>
                 )}
                 {activities.length === 0 && (
                   <>
-                    <p>Do you want to experience being prioritized?</p>
                     <button className="btn-booknow">Book Now</button>
                   </>
                 )}
@@ -338,10 +361,10 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
                 </div>
               </div>
 
-              <div className="open-wrapper">
+              {/* <div className="open-wrapper">
                 <p>Open Monday to Sunday </p>
                 <span>(7:00 AM to 5:00 PM)</span>
-              </div>
+              </div> */}
 
               {/* annoncement */}
               <div className="announcement">
@@ -401,14 +424,22 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
           </div>
 
           <div className="map-container">
-            <div className="t">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="t"
+            >
               <img src={virticon} alt="" />
               <span className="loader"></span>{" "}
-            </div>
+            </motion.div>
 
             <img src={map} alt="Map" className="map" />
 
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
               className="dot1"
               onClick={() =>
                 handleDotClick(
@@ -425,14 +456,6 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
                 selectedContent4 ||
                 selectedContent5) && (
                 <div className="landscape-wrapper">
-                  {/* <img
-                    src={lsIcon}
-                    className="dot1LsIcon"
-                    alt="Landscape Icon"
-                    onClick={handleLandscapeMode}
-                    style={{ cursor: "pointer" }}
-                  /> */}
-
                   <i
                     style={{ color: "yellow" }}
                     className="bi bi-x-lg"
@@ -440,8 +463,11 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
                   ></i>
                 </div>
               )}
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
               className="dot2"
               onClick={() =>
                 handleDotClick2(
@@ -452,8 +478,11 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
             >
               <span>Hanging Bridge</span>
               <img src={image1} alt="" className="image2" />
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
               className="dot3"
               onClick={() =>
                 handleDotClick3(
@@ -465,9 +494,12 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
               <span>Fishing Spot1</span>
 
               <img src={image2} alt="" className="image3" />
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
               className="dot4"
               onClick={() =>
                 handleDotClick4(
@@ -479,9 +511,12 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
               <span>Fishing Spot2</span>
 
               <img src={image2} alt="" className="image4" />
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
               className="dot5"
               onClick={() =>
                 handleDotClick5(
@@ -493,7 +528,7 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
               <span>Dancing</span>
 
               <img src={image2} alt="" className="image4" />
-            </div>
+            </motion.div>
 
             {selectedContent && (
               <div className="content-container" onClick={closePanorama}>
@@ -635,45 +670,6 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
             )}
           </div>
 
-          <div className="about-us">
-            <div className="top">
-              <h6>About Us</h6>
-            </div>
-
-            <div className="content">
-              <span>Welcome to Bulusan Lake Explorer!</span>
-              <p>
-                Nestled in the heart of Sorsogon, the beautiful Bulusan Lake
-                offers a peaceful retreat amidst nature's wonders. Surrounded by
-                lush forests, the crystal-clear waters of the lake provide the
-                perfect backdrop for relaxation and adventure. Whether you're
-                looking for a serene escape or an active exploration, Bulusan
-                Lake is a must-visit destination. <br />
-                At Bulusan Lake Explorer, we offer a variety of activities to
-                help you connect with nature, such as scenic boat rides, nature
-                hikes, and cultural tours. Our mission is to provide an
-                unforgettable experience while supporting the local community
-                and conservation efforts in Sorsogon. <br />
-              </p>
-            </div>
-
-            <div className="map_w">
-              <iframe
-                width="100%"
-                height="200"
-                frameorder="0"
-                id="gmap_canvas"
-                src="https://maps.google.com/maps?width=550&amp;height=400&amp;hl=en&amp;q=bulusan%20Lake%20Philippines+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-              ></iframe>
-              <a href="https://masterarbeitschreiben.com/">
-                Masterarbeit Ghostwriter
-              </a>
-              <script
-                type="text/javascript"
-                src="https://embedmaps.com/google-maps-authorization/script.js?id=91da756ab627eac722b31fb6cf350f170601b393"
-              ></script>
-            </div>
-          </div>
           <div className="footer">
             <div className="top">
               <span>Contact Us</span>
@@ -723,8 +719,8 @@ const Index = ({ showSidebar2, setSidebar, notifCount, handleFullscreen }) => {
             </div>
             <div className="bot">
               <span>
-                © 2024 Bulusan Lake Explorer. All rights reserved. Developed by
-                SalTech
+                © {year} Bulusan Lake Explorer. All rights reserved. Developed
+                by Ian Castillo
               </span>
             </div>
           </div>

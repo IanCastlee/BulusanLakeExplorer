@@ -110,10 +110,10 @@
           margin-top: 20px;
           flex-direction: column;
 
-          p {
+          h1 {
             color: #fff;
-            font-weight: 500;
-            font-size: 27px;
+            font-size: 36px;
+            line-height: 40px;
             text-align: start;
           }
 
@@ -121,8 +121,8 @@
             color: #fff;
             margin-top: 30px;
             margin-bottom: -10px;
-            font-size: 16px;
-            max-width: 300px;
+            font-size: 20px;
+            max-width: 500px;
             align-self: start;
           }
 
@@ -137,6 +137,19 @@
             padding: 8px 18px;
             align-self: start;
             margin-top: 10px;
+            opacity: 0;
+            animation: fadeUpButton ease-in-out 0.8s forwards;
+
+            @keyframes fadeUpButton {
+              0% {
+                opacity: 0;
+                transform: translateY(30px);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
           }
           .btn-booknow:hover {
             color: #fff;
@@ -432,19 +445,17 @@
       width: 100%;
       height: 500px;
       margin-top: 10px;
+      padding: 0;
 
       .t {
         display: flex;
         align-items: center;
         margin-top: 70px;
         gap: 5px;
-        margin-left: 20px;
-
-        // h6 {
-        //   font-weight: 500;
-        //   font-size: 16px;
-        //   color: var(--secondary-text-color);
-        // }
+        padding-left: 20px;
+        // background-color: rgba(0, 128, 0, 0.15);
+        margin-bottom: -30px;
+        padding-top: 20px;
 
         .loader {
           position: relative;
@@ -455,7 +466,7 @@
           content: "Bulusan Lake Virtual Tour";
           color: var(--primary-text-color);
           font-family: Arial, Helvetica, sans-serif;
-          font-size: 18px;
+          font-size: 23px;
           letter-spacing: 2px;
           font-weight: 700;
           display: inline-block;
@@ -498,10 +509,11 @@
       .map {
         width: 100%;
         height: 100%;
-        transition: transform 0.6s ease; // Smooth transition for zoom
+        transition: transform 0.6s ease;
+        border-radius: 15px;
 
         &.zooming {
-          transform: scale(2.1); // Adjust this scale for your zoom effect
+          transform: scale(2.1);
         }
       }
 
@@ -521,7 +533,7 @@
         left: 270px;
 
         &:hover {
-          background-color: darkred;
+          background-color: blue;
         }
 
         span {
@@ -571,7 +583,7 @@
         top: 75%;
         left: 80%;
         &:hover {
-          background-color: darkred;
+          background-color: blue;
         }
 
         span {
@@ -598,7 +610,7 @@
         left: 18%;
 
         &:hover {
-          background-color: darkred;
+          background-color: blue;
         }
 
         span {
@@ -623,11 +635,11 @@
         border-radius: 50%;
         cursor: pointer;
         transition: background-color 0.3s;
-        top: 70%;
+        top: 75%;
         left: 32%;
 
         &:hover {
-          background-color: darkred;
+          background-color: blue;
         }
         span {
           color: rgb(191, 235, 32);
@@ -650,11 +662,11 @@
         border-radius: 50%;
         cursor: pointer;
         transition: background-color 0.3s;
-        top: 80%;
+        top: 90%;
         left: 50%;
 
         &:hover {
-          background-color: darkred;
+          background-color: blue;
         }
         span {
           color: rgb(191, 235, 32);
@@ -702,57 +714,12 @@
           }
         }
       }
-
-      // .back {
-      //   position: fixed;
-      //   top: 10px;
-      //   left: 10px;
-      //   z-index: 999;
-      //   background-color: #fff;
-      // }
     }
 
-    .about-us {
-      width: 100%;
-      padding: 100px 70px 30px 70px;
-
-      .top {
-        width: 100%;
-
-        h6 {
-          font-size: 18px;
-          color: var(--primary-text-color);
-          font-weight: 700;
-        }
-      }
-
-      .content {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20px;
-        gap: 10px;
-        width: 80%;
-        span {
-          font-size: 16px;
-          color: var(--thersary-text-color);
-          font-weight: 500;
-        }
-        p {
-          font-size: 14px;
-          color: var(--thersary-text-color);
-        }
-      }
-
-      .map_w {
-        height: 150px;
-        width: 100%;
-        margin-top: 20px;
-      }
-    }
     .footer {
       width: 100%;
       background-color: var(--main-bgc);
-      margin-top: 200px;
+      margin-top: 100px;
       padding: 20px 70px;
 
       .top {
@@ -799,10 +766,13 @@
 
       .bot {
         width: 100%;
+        padding: 20px 0 0 0;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 20px;
+        border-top: 1px solid var(--border-color);
+        margin-top: 50px;
 
         span {
           font-size: 12px;
@@ -1075,7 +1045,7 @@
             margin-top: 20px;
             flex-direction: column;
 
-            p {
+            h1 {
               color: #fff;
               font-weight: 500;
               font-size: 27px;
@@ -1405,12 +1375,6 @@
           gap: 5px;
           margin-left: 20px;
 
-          // h6 {
-          //   font-weight: 500;
-          //   font-size: 16px;
-          //   color: var(--secondary-text-color);
-          // }
-
           .loader {
             position: relative;
             display: inline-block;
@@ -1463,10 +1427,10 @@
         .map {
           width: 100%;
           height: 100%;
-          transition: transform 0.6s ease; // Smooth transition for zoom
+          transition: transform 0.6s ease;
 
           &.zooming {
-            transform: scale(2.1); // Adjust this scale for your zoom effect
+            transform: scale(2.1);
           }
         }
 
@@ -1486,7 +1450,7 @@
           left: 210px;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
 
           span {
@@ -1712,6 +1676,8 @@
           height: 150px;
           width: 100%;
           margin-top: 20px;
+          border-radius: 15px;
+          overflow: hidden;
         }
       }
 
@@ -1958,7 +1924,7 @@
         img {
           border-bottom-left-radius: 10px;
           border-bottom-right-radius: 10px;
-          height: 350px;
+          height: 400px;
           width: 100%;
         }
 
@@ -2038,11 +2004,11 @@
             margin-top: 50px;
             flex-direction: column;
 
-            p {
+            h1 {
               color: rgb(237, 240, 236);
-              font-weight: 500;
               text-align: start;
-              font-size: 18px;
+              font-size: 25px;
+              line-height: 28px;
             }
 
             .discount {
@@ -2389,17 +2355,19 @@
         width: 100%;
         height: 400px;
         margin-top: 120px;
-
+        padding: 0;
         .t {
           display: flex;
           align-items: center;
           margin-top: 170px;
           gap: 5px;
           margin-left: 5px;
+          padding-bottom: 0;
 
           img {
             height: 50px;
             width: 50px;
+            margin-bottom: 20px;
           }
 
           .loader {
@@ -2452,10 +2420,10 @@
         .map {
           width: 100%;
           height: 90%;
-          transition: transform 0.6s ease; // Smooth transition for zoom
+          transition: transform 0.6s ease;
 
           &.zooming {
-            transform: scale(2.1); // Adjust this scale for your zoom effect
+            transform: scale(2.1);
           }
         }
 
@@ -2475,7 +2443,7 @@
           left: 70px;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
 
           span {
@@ -2504,7 +2472,7 @@
           left: 78%;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
           span {
             color: rgb(191, 235, 32);
@@ -2531,7 +2499,7 @@
           left: 8%;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
 
           span {
@@ -2559,7 +2527,7 @@
           left: 23%;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
 
           span {
@@ -2584,11 +2552,11 @@
           border-radius: 50%;
           cursor: pointer;
           transition: background-color 0.3s;
-          top: 70%;
+          top: 80%;
           left: 50%;
 
           &:hover {
-            background-color: darkred;
+            background-color: blue;
           }
 
           span {
@@ -2603,38 +2571,38 @@
         }
 
         .content-container {
-          position: fixed; // Fix to the viewport
+          position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.8); // Semi-transparent background
+          background: rgba(0, 0, 0, 0.8);
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 998; // Overlay above other content
-          cursor: grab; // Change cursor to indicate draggable
+          z-index: 998;
+          cursor: grab;
 
           &:active {
-            cursor: grabbing; // Change cursor when dragging
+            cursor: grabbing;
           }
 
           .panorama-content {
-            overflow: auto; // Allow scrolling to view the image
-            display: flex; // Ensure the image can expand
+            overflow: auto;
+            display: flex;
             cursor: grab;
             width: 100%;
             height: 100vh;
 
             &:active {
-              cursor: grabbing; // Change cursor when dragging
+              cursor: grabbing;
             }
 
             .panorama-image {
-              height: auto; // Let height adjust based on aspect ratio
-              width: auto; // Let width adjust based on aspect ratio
-              max-width: none; // Allow width to be greater than container
-              object-fit: contain; // Maintain aspect ratio
+              height: auto;
+              width: auto;
+              max-width: none;
+              object-fit: contain;
             }
           }
         }
@@ -2648,48 +2616,10 @@
         // }
       }
 
-      .about-us {
-        width: 100%;
-        padding: 50px 10px 10px 10px;
-
-        .top {
-          width: 100%;
-
-          h6 {
-            font-size: 18px;
-            color: var(--primary-text-color);
-            font-weight: 700;
-          }
-        }
-
-        .content {
-          display: flex;
-          flex-direction: column;
-          margin-top: 15px;
-          gap: 10px;
-          width: 100%;
-          span {
-            font-size: 16px;
-            color: var(--thersary-text-color);
-            font-weight: 500;
-          }
-          p {
-            font-size: 14px;
-            color: var(--thersary-text-color);
-          }
-        }
-
-        .map_w {
-          height: 100px;
-          width: 100%;
-          margin-top: 20px;
-        }
-      }
-
       .footer {
         width: 100%;
         background-color: var(--main-bgc);
-        margin-top: 200px;
+        margin-top: 30px;
         padding: 10px;
 
         .top {
@@ -2742,7 +2672,7 @@
           justify-content: center;
           align-items: center;
           margin-top: 25px;
-          margin-bottom: 50px;
+          margin-bottom: 30px;
 
           span {
             font-size: 12px;

@@ -9,14 +9,10 @@ import config from "../../BaseURL";
 import Signup from "../../pages/signup/Signup";
 import axios from "axios";
 import pp from "../../assets/chat-bot.png";
+import blsnlogo from "../../assets/logo (500 x 500 px) (1).png";
+// import blsnlogo from "../../assets/bldnxplrlogo.png";
 
-const Navbar = ({
-  hide,
-  hideIcons,
-  showSidebar,
-  className,
-  handleFullscreen,
-}) => {
+const Navbar = ({ hide, hideIcons, showSidebar, className, scrollY }) => {
   const { userInfo, userid, unclicked, fetchUserData, theme, toggleTheme } =
     useContext(SidebarContext);
 
@@ -40,8 +36,6 @@ const Navbar = ({
   };
 
   const closeWeather = () => {
-    handleFullscreen();
-
     setActiveCloude(false);
     setWeather(false);
   };
@@ -173,9 +167,14 @@ const Navbar = ({
     }
   };
 
+  console.log("HHHH", scrollY);
   return (
     <>
-      <div className={`navbar ${hide ? "show" : ""} ${className}`}>
+      <div
+        className={`navbar ${hide ? "show" : ""} ${className} ${
+          scrollY ? "scrolled" : ""
+        }`}
+      >
         <div className="nav-left">
           {hide && (
             <Link
@@ -211,12 +210,14 @@ const Navbar = ({
           )}
 
           <div className={`logo-wrapper ${hide ? "s" : ""}`}>
-            <h6 onClick={ActiveHome}>
+            {/* <h6 onClick={ActiveHome}>
               <Link className={`${className}`} to="/">
                 BulusanLake
               </Link>
             </h6>
-            <p className={`${className}`}>explorer</p>
+            <p className={`${className}`}>explorer</p> */}
+
+            <img src={blsnlogo} alt="" />
           </div>
         </div>
 
@@ -228,7 +229,7 @@ const Navbar = ({
               </Link>
             )}
 
-            <Link className="icon" to="/" onClick={ActiveHome}>
+            <Link className="icon" to="/home/" onClick={ActiveHome}>
               <i
                 className={`bi bi-house ${className} ${
                   activeHome ? "active" : ""
@@ -237,20 +238,6 @@ const Navbar = ({
               <div className="tooltip">Home</div>
             </Link>
 
-            {/* <Link className="icon" to="/payment/" onClick={ActiveHome}>
-              Payment
-              <div className="tooltip">Payment</div>
-            </Link> */}
-
-            {/* <Link className="icon" onClick={ActivePin}>
-              <i
-                className={`bi bi-pin-angle ${className} ${
-                  activePin ? "active" : ""
-                }`}
-                ref={announceIcon}
-              ></i>
-              <div className="tooltip">Announcement</div>
-            </Link> */}
             <Link className="icon" onClick={ActiveCloude}>
               <i
                 className={`bi bi-cloud-sun ${className} ${
@@ -422,7 +409,7 @@ const Navbar = ({
           </div>
         </div>
       </div>
-      {openWeather && <Weather close={closeWeather} />}
+      {openWeather && <Weather closeWeather={closeWeather} />}
       {openAnnouncement && <Announcement close={closePin} />}
       {showSignin && <div className="overlay"></div>}
       {showSignin && <Signup closeModal={() => setShowSignin(false)} />}

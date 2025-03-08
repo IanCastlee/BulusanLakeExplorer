@@ -1,9 +1,11 @@
 import "./feed.scss";
+import { motion } from "framer-motion";
+
 import { useContext, useEffect, useRef, useState } from "react";
 import pp from "../../assets/user (8).png";
 import Comment from "../../components/comment/Comment";
 import { Upload } from "../../components/upload/Upload";
-import Sidebarcontext, { SidebarContext } from "../../context/Sidebarcontext";
+import { SidebarContext } from "../../context/Sidebarcontext";
 import axios from "axios";
 import config from "../../BaseURL";
 import { Link } from "react-router-dom";
@@ -340,7 +342,13 @@ const Feed = () => {
               const additionalCount = imageCount - 5;
 
               return (
-                <div key={post.post_id} className="wrapper">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  key={post.post_id}
+                  className="wrapper"
+                >
                   <Link
                     to={`/view-post/${post.post_id}`}
                     className={`post-img-wrapper ${getImageClass(imageCount)}`}
@@ -457,29 +465,6 @@ const Feed = () => {
                               ) : (
                                 ""
                               )}
-
-                              {/* {userid === 0 ? (
-                                <span
-                                  className="report"
-                                  onClick={() => setInput(true)}
-                                >
-                                  Report
-                                </span>
-                              ) : (
-                                post.user_id !== userid && (
-                                  <span
-                                    className="report"
-                                    onClick={() =>
-                                      selectedPostToReport(
-                                        post.post_id,
-                                        post.user_id
-                                      )
-                                    }
-                                  >
-                                    Report
-                                  </span>
-                                )
-                              )} */}
                             </div>
                           </div>
                         )}
@@ -492,7 +477,7 @@ const Feed = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })
           ) : (

@@ -3,11 +3,11 @@ import axios from "axios";
 import "./weather.scss";
 import config from "../../BaseURL";
 
-const Weather = ({ close }) => {
+const Weather = ({ closeWeather }) => {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -20,11 +20,11 @@ const Weather = ({ close }) => {
           setCurrentWeather(data.current);
           setForecast(data.forecast);
         }
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false);
       })
       .catch((error) => {
         setError("Error fetching data.");
-        setLoading(false); // Set loading to false if there's an error
+        setLoading(false);
       });
   }, []);
 
@@ -44,11 +44,11 @@ const Weather = ({ close }) => {
           <h3>Bulusan Lake weather</h3>
           <span>(accuracy 80%)</span>
         </div>
-        <i className="bi bi-x-lg close2" onClick={close}></i>
+        <i className="bi bi-x-lg close2" onClick={closeWeather}></i>
       </div>
 
       <div className="content">
-        {loading && <span className="loader"></span>} {/* Display loader */}
+        {loading && <span className="loader"></span>}
         {error && <div className="error">{error}</div>}
         {!loading && currentWeather && (
           <div className="current-weather">
@@ -58,7 +58,7 @@ const Weather = ({ close }) => {
             )}
           </div>
         )}
-        {!loading && forecast && (
+        {!loading && forecast ? (
           <div className="forecast">
             {forecast.map((day, index) => (
               <div key={index} className="forecast-day">
@@ -71,6 +71,8 @@ const Weather = ({ close }) => {
               </div>
             ))}
           </div>
+        ) : (
+          <p>Check your internet connection</p>
         )}
       </div>
     </div>

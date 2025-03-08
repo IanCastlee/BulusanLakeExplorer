@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -54,6 +54,7 @@ import Fees from "./pages/fees/Fees";
 import Fees_a from "./ADMIN/fees/Fees_a";
 import NotArrived from "./ADMIN/reservation/NotArrived";
 import Search from "./pages/search/Search";
+import { Landingpage } from "./components/landing/Landingpage";
 // import RateMe from "./pages/rating/RateMe";
 // import axios from "axios";
 // import config from "./BaseURL";
@@ -109,47 +110,36 @@ const AppContent = () => {
   const [showSidebar, setSidebar] = useState(false);
   const [notifCount, setNotifCount] = useState(null);
 
+  const [scrollY, setscrollY] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setscrollY(true);
+      } else {
+        setscrollY(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const toggleSidebar = () => {
     setSidebar(!showSidebar);
   };
 
-  const shouldHideLogo = location.pathname === "/";
+  const shouldHideLogo = location.pathname === "/home/";
   const shouldHideIcons = location.pathname === "/mybooking/";
   const hideNav = location.pathname === "/message/";
   const hideNavbio = location.pathname === "/bio-search/";
   const hideNavbiodetails = /^\/bio-details\/[^/]+$/.test(location.pathname);
   const hideNavuserProfile = /^\/user-profile\/[^/]+$/.test(location.pathname);
-  const navbarClass = location.pathname === "/" ? "homeNavbar" : "";
+  const navbarClass = location.pathname === "/home/" ? "homeNavbar" : "";
 
   const appRef = useRef(null);
-
-  const handleFullscreen = () => {
-    const width = window.innerWidth;
-    const userAgent = navigator.userAgent.toLowerCase();
-
-    if (width <= 789) {
-      if (/android|iphone|ipad|ipod/.test(userAgent)) {
-        // If device is mobile
-        if (appRef.current && appRef.current.requestFullscreen) {
-          appRef.current.requestFullscreen().catch((err) => {
-            console.error("Fullscreen error:", err);
-          });
-        } else if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen().catch((err) => {
-            console.error("Fullscreen error:", err);
-          });
-        }
-      } else {
-        console.log(
-          "Fullscreen request ignored. Screen width is less than 789px but not a mobile device."
-        );
-      }
-    } else {
-      console.log(
-        "Fullscreen request ignored. Screen width is greater than 789px."
-      );
-    }
-  };
 
   return isAdminRoute ? (
     <Admin />
@@ -161,7 +151,7 @@ const AppContent = () => {
           hideIcons={shouldHideIcons}
           showSidebar={toggleSidebar}
           className={navbarClass}
-          handleFullscreen={handleFullscreen}
+          scrollY={scrollY}
         />
       )}
 
@@ -175,17 +165,18 @@ const AppContent = () => {
             transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
           >
             <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Landingpage />} />
               <Route
-                path="/"
+                path="/home/"
                 element={
                   <Index
                     showSidebar2={showSidebar}
                     setSidebar={toggleSidebar}
                     notifCount={notifCount}
-                    handleFullscreen={handleFullscreen}
                   />
                 }
               />
+
               <Route element={<Sidebar notifCount={notifCount} />} />
               <Route path="/act-info/:id" element={<Actinfo />} />
               <Route
