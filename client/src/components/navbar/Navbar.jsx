@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./navbar.scss";
 import profileimage from "../../assets/user (8).png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Weather from "../weather/Weather";
 import Announcement from "../announcement/Announcement";
 import { SidebarContext } from "../../context/Sidebarcontext";
@@ -15,6 +15,8 @@ import blsnlogo from "../../assets/logo (500 x 500 px) (1).png";
 const Navbar = ({ hide, hideIcons, showSidebar, className, scrollY }) => {
   const { userInfo, userid, unclicked, fetchUserData, theme, toggleTheme } =
     useContext(SidebarContext);
+
+  const navigate = useNavigate();
 
   const [openWeather, setWeather] = useState(false);
   const [openAnnouncement, setAnnouncement] = useState(false);
@@ -210,13 +212,6 @@ const Navbar = ({ hide, hideIcons, showSidebar, className, scrollY }) => {
           )}
 
           <div className={`logo-wrapper ${hide ? "s" : ""}`}>
-            {/* <h6 onClick={ActiveHome}>
-              <Link className={`${className}`} to="/">
-                BulusanLake
-              </Link>
-            </h6>
-            <p className={`${className}`}>explorer</p> */}
-
             <img src={blsnlogo} alt="" />
           </div>
         </div>
@@ -247,7 +242,13 @@ const Navbar = ({ hide, hideIcons, showSidebar, className, scrollY }) => {
               ></i>
               <div className="tooltip">Weather</div>
             </Link>
-            <Link className="icon" to="/feed/" onClick={ActiveImage}>
+            <Link
+              className="icon"
+              onClick={() => {
+                navigate("/feed/");
+                ActiveImage();
+              }}
+            >
               <i
                 className={`bi bi-image ${className} ${
                   activeImage ? "active" : ""

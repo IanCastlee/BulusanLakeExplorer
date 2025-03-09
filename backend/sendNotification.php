@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = isset($_POST['userid']) ? $_POST['userid'] : null;
     $title = isset($_POST['title']) ? $_POST['title'] : null;
     $body = isset($_POST['body']) ? $_POST['body'] : null;
-    //$url = isset($_POST['url']) ? $_POST['url'] : null;
 
     $serviceAccount = './pushnotif-9156a-firebase-adminsdk-4npg9-a75d53c0e8.json';
     // Initialize Firebase
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = CloudMessage::withTarget('token', $token)
         ->withNotification(Notification::create($title, $body))
         ->withData([
-            'click_action' => $url // Include the URL for redirection
+            'click_action' => $url 
         ]);
 
     // Send the message

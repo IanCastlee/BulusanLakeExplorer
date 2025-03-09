@@ -37,19 +37,19 @@ if ($email) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'ml99997955@gmail.com'; // Your Gmail address
-        $mail->Password   = 'sers hwlz crfu fzas'; // App password
+        $mail->Username   = 'ml99997955@gmail.com'; 
+        $mail->Password   = 'sers hwlz crfu fzas'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
         // Recipients
         $mail->setFrom('ml99997955@gmail.com', 'BulusanLakeExplorer');
-        $mail->addAddress($email);  // Recipient email
+        $mail->addAddress($email);  
 
         // Content
         $mail->isHTML(true);
         $mail->Subject = $title;
-        $mail->Body    = $content . '<br><br>' . $button; // Add the button to the email body
+        $mail->Body    = $content . '<br><br>' . $button; 
 
         // Send the email
         if ($mail->send()) {

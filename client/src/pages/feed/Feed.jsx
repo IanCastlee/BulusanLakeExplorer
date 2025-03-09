@@ -1,5 +1,8 @@
 import "./feed.scss";
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+import placeholderimg from "../../assets/icon/placeholder_img.png";
 
 import { useContext, useEffect, useRef, useState } from "react";
 import pp from "../../assets/user (8).png";
@@ -28,6 +31,11 @@ const Feed = () => {
   const closeSignupModal = () => {
     setInput(false);
   };
+
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   const [showSearchBar, setshowSearchBar] = useState(false);
 
@@ -261,7 +269,7 @@ const Feed = () => {
 
   return (
     <>
-      <div className="feed">
+      <div className="feed" ref={ref}>
         <div className="lefttt">
           <div className="upload">
             <i
@@ -355,11 +363,23 @@ const Feed = () => {
                   >
                     {post.images.slice(0, 5).map((image, index) => (
                       <img
-                        key={index}
-                        src={`${config.apiBaseUrl}backend/uploads/${image}`}
+                        src={
+                          inView
+                            ? `${config.apiBaseUrl}backend/uploads/${image}`
+                            : placeholderimg
+                        }
                         alt={`post-${index}`}
                         className="post-img"
+                        key={index}
                       />
+
+                      // <LazyLoading
+                      //   key={index}
+                      //   src={`${config.apiBaseUrl}backend/uploads/${image}`}
+                      //   placeholder={placeholderimg}
+                      //   alt={`post-${index}`}
+                      //   className="post-img"
+                      // />
                     ))}
                     {showOverlay && (
                       <div className="overlay">

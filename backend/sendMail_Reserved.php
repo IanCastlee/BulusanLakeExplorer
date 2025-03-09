@@ -34,8 +34,8 @@ if ($email && $title && $content && $userID) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'ml99997955@gmail.com'; // Your Gmail address
-        $mail->Password   = 'sers hwlz crfu fzas'; // App password
+        $mail->Username   = 'ml99997955@gmail.com'; 
+        $mail->Password   = 'sers hwlz crfu fzas'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 

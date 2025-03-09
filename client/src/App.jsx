@@ -176,7 +176,6 @@ const AppContent = () => {
                   />
                 }
               />
-
               <Route element={<Sidebar notifCount={notifCount} />} />
               <Route path="/act-info/:id" element={<Actinfo />} />
               <Route
@@ -202,7 +201,6 @@ const AppContent = () => {
                 path="/user-viewpost/:img_id/:id"
                 element={<OpenImage />}
               />
-
               <Route path="/payment/" element={<Payment />} />
               <Route path="/fees/" element={<Fees />} />
               <Route path="/search/" element={<Search />} />
